@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Deploy Docker on AWS VMs | Lescai Teaching - Documentation pages</title>
+<meta name="keywords" content="howto" />
+<meta name="description" content="Overview e motivazione Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:
+ gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti); gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale; gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento; gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame; gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali.">
+<meta name="author" content="Francesco">
+<link rel="canonical" href="/2022/02/22/deploy-docker-aws/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Deploy Docker on AWS VMs" />
+<meta property="og:description" content="Overview e motivazione Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:
+ gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti); gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale; gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento; gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame; gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2022/02/22/deploy-docker-aws/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-22T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-02-22T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Deploy Docker on AWS VMs"/>
+<meta name="twitter:description" content="Overview e motivazione Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:
+ gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti); gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale; gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento; gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame; gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Deploy Docker on AWS VMs",
+      "item": "/2022/02/22/deploy-docker-aws/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Deploy Docker on AWS VMs",
+  "name": "Deploy Docker on AWS VMs",
+  "description": "Overview e motivazione Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:\n gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti); gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale; gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento; gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame; gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali.",
+  "keywords": [
+    "howto"
+  ],
+  "articleBody": "Overview e motivazione Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:\n gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti); gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale; gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento; gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame; gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali.  Portabilità e scalabilità sono quindi caratteristiche essenziali della scelta da effettuare.\nLa soluzione qui descritta utilizza l’ambiente di containerizzazione Docker, che rappresenta una scelta ideale per i seguenti motivi:\n puo essere eseguito su qualsiasi piattaforma individuale, consentendo sia a docente che studente di installare l’applicativo sul proprio computer e sviluppare o far correre un ambiente di lavoro; puo essere eseguito sui desktop delle aule informatiche, utilizzando podman (soluzione rootless sicura in ambienti di rete); puo essere eseguito nel cloud; puo essere aggiornato in modo molto agile e in corso d’opera se necessario, aggiornando l’immagine nel registro pubblico; build e pubblicazione possono essere automatizzati tramite GitHub Actions.  Strumenti utilizzati Docker Docker puo essere scaricato su qualsiasi piattaforma e usato per costruire containers dotati di numerosi strumenti.\nNel mio caso, ho preferito costruire containers che esponessero dei servizi via web, in modo da rendere gli strumenti accessibili tramite browser.\nVSCode Server Usando ad esempio VScode Server, una implementazione di Visual Studio Code via web, si puo dare accesso sia ad un editor che ad un terminale tramite browser e da qui le possibilita sono infinite: tramite il terminale, il container puo mettere a disposizione il piu ampio ventaglio di strumenti disponibili in ambiente unix.\nTerraform Terraform è uno strumento di gestione di infrastrutture cloud, agnostico rispetto al provider dei servizi. È spesso definito infrastructure-as-a-code perché consente usando dei file strutturati in formato JSON di descrivere le infrastrutture che si vogliono creare, e con pochi comandi costruire, avviare, monitorare e distruggere tutte queste infrastrutture e i servizi loro associati senza rischio di lasciare elementi in funzione che consumano costi e risorse.\nTramite Terraform si possono avviare un numero flessibile di strumenti contemporaneamente, e spegnerli tutti assieme quando non servono piu, come nel caso di laboratori virtuali.\nDeployment Per gestire l’infrastruttura con Terraform bisogna creare un file con estensione .tf e denominazione a piacere.\nNel file si indicherà il provider da utilizzare, come segue:\nprovider \"aws\" { region = \"eu-central-1\" ## choose the region you want to run the VM on } Si indicherà il gruppo di sicurezza da creare (o eventualmente il nome di uno già) esistente, come segue:\nresource \"aws_security_group\" \"name_vm_security_group\" { name = \"name_vm_security_group\" ingress { ## adjust this block according to needs from_port = 8787 to_port = 8787 protocol = \"tcp\" cidr_blocks = [\"0.0.0.0/0\"] # Allowing traffic in from all sources } egress { from_port = 0 to_port = 0 protocol = \"-1\" cidr_blocks = [\"0.0.0.0/0\"] } } si possono stabilire numerose policy in ingress, ripetendo il blocco ingress piu volte.\nSuccessivamnte si definisce la macchina virtuale, in questo caso utilizzando una AMI semplicissima che contiene una installazione di docker ma niente altro:\nresource \"aws_instance\" \"vmname\" { ## choose the name of your VM count = var.instance_count ami = \"ami-00ad5641b98c7c624\" ## this is a bare minimal VM with docker installed instance_type = var.instance_type security_groups = [\"${aws_security_group.name_vm_security_group.name}\"] ## } All’interno della risosa descritta sopra si puo anche inserire un blocco chiamato provisioner di tipo remote-exec, che consente di eseguire comandi in remoto sulla macchina appena creata.\nUsando questa possibilità, si possono avviare uno o piu container docker sulla macchina virtuale e quindi consentire l’accesso ai loro servizi sulle porte aperte nella macchina\nprovisioner \"remote-exec\" { ## inline = [ \"mkdir -p /home/ubuntu/exam\", ## you can create folders \"docker run -d --name rstudio -p 0.0.0.0:8787:8787 -v /home/ubuntu/exam:/home/rstudio/datiesame -e DISABLE_AUTH=true ghcr.io/lescai-teaching/rstudio-docker-amd64:latest\", ## \"docker run -d --name vscode -p 0.0.0.0:8443:8443 -v /home/ubuntu/exam:/config/workspace/datiesame ghcr.io/lescai-teaching/vscode-docker-amd64:latest\", ## \"docker exec -it rstudio groupadd -g 911 dockershare\" ## ] connection { host = \"${self.public_ip}\" type = \"ssh\" user = \"ubuntu\" private_key = \"${file(\"####\")}\" ## } } A questo punto per avviare l’infrastruttura (si presuppone che terraform sia installato e che le credenziali AWS siano state inizializzate), è sufficiente prima inizializzare la cartella\nterraform init Poi creare il piano:\nterraform plan -out infrastructure.plan E infine applicarlo: questo aprirà una comunicazione con AWS, creerà l’infrastruttura e comunicherà le informazioni richieste nel file outputs.tf\nterraform apply infrastructure.plan In particolare due files aggiuntivi, il cui nome è predefinito possono essere utilizzati:\n terraform.tfvars  instance_count = 1 instance_type = \"t2.large\" questo file indica i parametri specificati come variabili nel codice principale e consente senza modificare il codice di adattare numero e tipo di istanze da avviare\n outputs.tf  questo file cattura le informazioni che vengono descritte nel file\noutput \"instance_id\" { description = \"ID of the EC2 instance\" value = [\"${aws_instance.examvm.*.id}\"] } output \"instance_public_ip\" { description = \"Public IP address of the EC2 instance\" value = [\"${aws_instance.examvm.*.public_ip}\"] } E le stampa a schermo ma anche in un file denominato terraform.tfstate: si tratta di un file JSON che puo essere processato per catturare gli outputs e utilizzarli, ad esempio, per inviare a ciascuno studente le credenziali della macchina a cui collegarsi.\nCodice e Automazione Il codice che puo essere utilizzato come template si trova in questo repository.\nL’uso di GitHub Actions consente di automatizzare sia il build multipiattaforma che la pubblicazione dei containers usando Github. Un esempio di workflow si trova all’indirizzo del repository.\n",
+  "wordCount" : "1019",
+  "inLanguage": "en",
+  "datePublished": "2022-02-22T00:00:00Z",
+  "dateModified": "2022-02-22T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Francesco"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2022/02/22/deploy-docker-aws/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lescai Teaching - Documentation pages",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Lescai Teaching - Documentation pages (Alt + H)">Lescai Teaching - Documentation pages</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/lescai-teaching" title="GitHub">
+                    <span>GitHub</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://lescailab.unipv.it" title="Lab">
+                    <span>Lab</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Deploy Docker on AWS VMs
+    </h1>
+    <div class="post-meta"><span title='2022-02-22 00:00:00 +0000 UTC'>February 22, 2022</span>&nbsp;·&nbsp;Francesco
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="overview-e-motivazione">Overview e motivazione<a hidden class="anchor" aria-hidden="true" href="#overview-e-motivazione">#</a></h1>
+<p>Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:</p>
+<ul>
+<li>gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti);</li>
+<li>gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale;</li>
+<li>gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento;</li>
+<li>gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame;</li>
+<li>gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali.</li>
+</ul>
+<p><strong>Portabilità</strong> e <strong>scalabilità</strong> sono quindi caratteristiche essenziali della scelta da effettuare.</p>
+<p>La soluzione qui descritta utilizza l&rsquo;ambiente di containerizzazione <em>Docker</em>, che rappresenta una scelta ideale per i seguenti motivi:</p>
+<ul>
+<li>puo essere eseguito su qualsiasi piattaforma individuale, consentendo sia a docente che studente di installare l&rsquo;applicativo sul proprio computer e sviluppare o far correre un ambiente di lavoro;</li>
+<li>puo essere eseguito sui desktop delle aule informatiche, utilizzando <em>podman</em> (soluzione <em>rootless</em> sicura in ambienti di rete);</li>
+<li>puo essere eseguito nel cloud;</li>
+<li>puo essere aggiornato in modo molto agile e <em>in corso d&rsquo;opera</em> se necessario, aggiornando l&rsquo;immagine nel registro pubblico;</li>
+<li>build e pubblicazione possono essere automatizzati tramite GitHub Actions.</li>
+</ul>
+<h1 id="strumenti-utilizzati">Strumenti utilizzati<a hidden class="anchor" aria-hidden="true" href="#strumenti-utilizzati">#</a></h1>
+<h2 id="docker">Docker<a hidden class="anchor" aria-hidden="true" href="#docker">#</a></h2>
+<p><a href="https://www.docker.com/why-docker">Docker</a> puo essere scaricato su qualsiasi piattaforma e usato per costruire containers dotati di numerosi strumenti.</p>
+<p>Nel mio caso, ho preferito costruire containers che esponessero dei servizi via web, in modo da rendere gli strumenti accessibili tramite browser.</p>
+<h2 id="vscode-server">VSCode Server<a hidden class="anchor" aria-hidden="true" href="#vscode-server">#</a></h2>
+<p>Usando ad esempio <a href="https://github.com/coder/code-server">VScode Server</a>, una implementazione di Visual Studio Code via web, si puo dare accesso sia ad un editor che ad un terminale tramite browser e da qui le possibilita sono infinite: tramite il terminale, il container puo mettere a disposizione il piu ampio ventaglio di strumenti disponibili in ambiente unix.</p>
+<h2 id="terraform">Terraform<a hidden class="anchor" aria-hidden="true" href="#terraform">#</a></h2>
+<p><a href="https://www.terraform.io">Terraform</a> è uno strumento di gestione di infrastrutture cloud, agnostico rispetto al provider dei servizi. È spesso definito <em>infrastructure-as-a-code</em> perché consente usando dei file strutturati in formato JSON di descrivere le infrastrutture che si vogliono creare, e con pochi comandi costruire, avviare, monitorare e distruggere tutte queste infrastrutture e i servizi loro associati senza rischio di lasciare elementi in funzione che consumano costi e risorse.</p>
+<p>Tramite Terraform si possono avviare un numero flessibile di strumenti contemporaneamente, e spegnerli tutti assieme quando non servono piu, come nel caso di laboratori virtuali.</p>
+<h1 id="deployment">Deployment<a hidden class="anchor" aria-hidden="true" href="#deployment">#</a></h1>
+<p>Per gestire l&rsquo;infrastruttura con <em>Terraform</em> bisogna creare un file con estensione <em>.tf</em> e denominazione a piacere.</p>
+<p>Nel file si indicherà il provider da utilizzare, come segue:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">provider <span style="color:#e6db74">&#34;aws&#34;</span> {
+    region <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;eu-central-1&#34;</span> <span style="color:#75715e">## choose the region you want to run the VM on</span>
+}
+</code></pre></div><p>Si indicherà il gruppo di sicurezza da creare (o eventualmente il nome di uno già) esistente, come segue:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">resource <span style="color:#e6db74">&#34;aws_security_group&#34;</span> <span style="color:#e6db74">&#34;name_vm_security_group&#34;</span> {
+  name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;name_vm_security_group&#34;</span>
+  ingress { <span style="color:#75715e">## adjust this block according to needs</span>
+    from_port   <span style="color:#f92672">=</span> <span style="color:#ae81ff">8787</span>
+    to_port     <span style="color:#f92672">=</span> <span style="color:#ae81ff">8787</span>
+    protocol    <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;tcp&#34;</span>
+    cidr_blocks <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>] <span style="color:#75715e"># Allowing traffic in from all sources</span>
+  }
+  egress {
+    from_port   <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    to_port     <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    protocol    <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;-1&#34;</span>
+    cidr_blocks <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>]
+  }
+}
+</code></pre></div><p>si possono stabilire numerose policy in ingress, ripetendo il blocco <em>ingress</em> piu volte.</p>
+<p>Successivamnte si definisce la macchina virtuale, in questo caso utilizzando una AMI semplicissima che contiene una installazione di docker ma niente altro:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">resource <span style="color:#e6db74">&#34;aws_instance&#34;</span> <span style="color:#e6db74">&#34;vmname&#34;</span> { <span style="color:#75715e">## choose the name of your VM</span>
+    count <span style="color:#f92672">=</span> var.instance_count
+    ami <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ami-00ad5641b98c7c624&#34;</span> <span style="color:#75715e">## this is a bare minimal VM with docker installed</span>
+    instance_type <span style="color:#f92672">=</span> var.instance_type
+    security_groups <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;${aws_security_group.name_vm_security_group.name}&#34;</span>] <span style="color:#75715e">## &lt;- make sure name resources match</span>
+}
+</code></pre></div><p>All&rsquo;interno della risosa descritta sopra si puo anche inserire un blocco chiamato <em>provisioner</em> di tipo <em>remote-exec</em>, che consente di eseguire comandi in remoto sulla macchina appena creata.</p>
+<p>Usando questa possibilità, si possono avviare uno o piu container docker sulla macchina virtuale e quindi consentire l&rsquo;accesso ai loro servizi sulle porte aperte nella macchina</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"> provisioner <span style="color:#e6db74">&#34;remote-exec&#34;</span> { <span style="color:#75715e">## &lt;- this is used to execute commands on your VM before releasing them</span>
+      inline <span style="color:#f92672">=</span> [
+        <span style="color:#e6db74">&#34;mkdir -p /home/ubuntu/exam&#34;</span>, <span style="color:#75715e">## you can create folders</span>
+        <span style="color:#e6db74">&#34;docker run -d --name rstudio -p 0.0.0.0:8787:8787 -v /home/ubuntu/exam:/home/rstudio/datiesame -e DISABLE_AUTH=true ghcr.io/lescai-teaching/rstudio-docker-amd64:latest&#34;</span>, <span style="color:#75715e">## &lt;- run containers</span>
+        <span style="color:#e6db74">&#34;docker run -d --name vscode -p 0.0.0.0:8443:8443 -v /home/ubuntu/exam:/config/workspace/datiesame ghcr.io/lescai-teaching/vscode-docker-amd64:latest&#34;</span>, <span style="color:#75715e">## &lt;- as many as you need</span>
+        <span style="color:#e6db74">&#34;docker exec -it rstudio groupadd -g 911 dockershare&#34;</span> <span style="color:#75715e">## &lt;- and also execute commands inside the container of choice</span>
+      ]
+      connection {
+      host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;${self.public_ip}&#34;</span>
+      type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ssh&#34;</span>
+      user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ubuntu&#34;</span>
+      private_key <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;${file(&#34;</span><span style="color:#75715e">####&#34;)}&#34; ## &lt;- here you need to specify the path to your private key</span>
+      }
+    }
+</code></pre></div><p>A questo punto per avviare l&rsquo;infrastruttura (si presuppone che terraform sia installato e che le credenziali AWS siano state inizializzate), è sufficiente prima inizializzare la cartella</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">terraform init
+</code></pre></div><p>Poi creare il piano:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">terraform plan <span style="color:#f92672">-</span>out infrastructure.plan
+</code></pre></div><p>E infine applicarlo: questo aprirà una comunicazione con AWS, creerà l&rsquo;infrastruttura e comunicherà le informazioni richieste nel file <em>outputs.tf</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">terraform apply infrastructure.plan
+</code></pre></div><p>In particolare due files aggiuntivi, il cui nome è predefinito possono essere utilizzati:</p>
+<ul>
+<li><strong>terraform.tfvars</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">instance_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+instance_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;t2.large&#34;</span>
+</code></pre></div><p>questo file indica i parametri specificati come variabili nel codice principale e consente senza modificare il codice di adattare numero e tipo di istanze da avviare</p>
+<ul>
+<li><strong>outputs.tf</strong></li>
+</ul>
+<p>questo file cattura le informazioni che vengono descritte nel file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">output <span style="color:#e6db74">&#34;instance_id&#34;</span> {
+  description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ID of the EC2 instance&#34;</span>
+  value       <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;${aws_instance.examvm.*.id}&#34;</span>]
+}
+
+output <span style="color:#e6db74">&#34;instance_public_ip&#34;</span> {
+  description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Public IP address of the EC2 instance&#34;</span>
+  value       <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;${aws_instance.examvm.*.public_ip}&#34;</span>]
+}
+</code></pre></div><p>E le stampa a schermo ma anche in un file denominato <strong>terraform.tfstate</strong>: si tratta di un file JSON che puo essere processato per catturare gli outputs e utilizzarli, ad esempio, per inviare a ciascuno studente le credenziali della macchina a cui collegarsi.</p>
+<h1 id="codice-e-automazione">Codice e Automazione<a hidden class="anchor" aria-hidden="true" href="#codice-e-automazione">#</a></h1>
+<p>Il codice che puo essere utilizzato come template si trova in questo <a href="https://github.com/lescai-teaching/deploy_docker_tutorial">repository</a>.</p>
+<p>L&rsquo;uso di <a href="https://github.com/features/actions">GitHub Actions</a> consente di automatizzare sia il build multipiattaforma che la pubblicazione dei containers usando Github.
+Un <a href="https://github.com/lescai-teaching/rstudio-docker/blob/main/.github/workflows/build_docker_amd64_v4.1.yml">esempio</a> di workflow si trova all&rsquo;indirizzo del repository.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/howto/">howto</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Lescai Teaching - Documentation pages</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
