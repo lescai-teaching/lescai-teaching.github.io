@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Introduction to ggplot2 | Lescai Teaching - Documentation pages</title>
+<meta name="keywords" content="" />
+<meta name="description" content="Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.
+Wide vs Long In the following case we have a clear example where data are not tidy.
+table_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves.">
+<meta name="author" content="Francesco">
+<link rel="canonical" href="/2022/05/18/introduction-to-ggplot2/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Introduction to ggplot2" />
+<meta property="og:description" content="Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.
+Wide vs Long In the following case we have a clear example where data are not tidy.
+table_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2022/05/18/introduction-to-ggplot2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-05-18T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-05-18T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Introduction to ggplot2"/>
+<meta name="twitter:description" content="Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.
+Wide vs Long In the following case we have a clear example where data are not tidy.
+table_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Introduction to ggplot2",
+      "item": "/2022/05/18/introduction-to-ggplot2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Introduction to ggplot2",
+  "name": "Introduction to ggplot2",
+  "description": "Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.\nWide vs Long In the following case we have a clear example where data are not tidy.\ntable_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ## \u0026lt;chr\u0026gt; \u0026lt;dbl\u0026gt; \u0026lt;dbl\u0026gt; \u0026lt;dbl\u0026gt; ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves.",
+  "keywords": [
+    
+  ],
+  "articleBody": "  Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.\nWide vs Long In the following case we have a clear example where data are not tidy.\ntable_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ##     ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves. In order to use these data properly, we should move those values into a column, and therefore pivot the table from this wide format to a longer one.\nWe do that, by using the code below:\ntable_colvars %% pivot_longer( cols = c(`2020`:`2022`), names_to = \"year\", values_to = \"cases\" ) ## # A tibble: 12 x 3 ## country year cases ##    ## 1 Italy 2020 12 ## 2 Italy 2021 9 ## 3 Italy 2022 7 ## 4 France 2020 13 ## 5 France 2021 10 ## 6 France 2022 9 ## 7 Germany 2020 11 ## 8 Germany 2021 8 ## 9 Germany 2022 10 ## 10 Belgium 2020 14 ## 11 Belgium 2021 12 ## 12 Belgium 2022 14 Now colums are consistent with a single variable representation, and rows represent indeed one single record per variable combination.\nLet’s have a look at this second table, were we have the opposite case:\ntable_diffvars ## # A tibble: 16 x 4 ## country year type count ##     ## 1 Italy 2020 cases 12 ## 2 Italy 2020 population 34564 ## 3 Italy 2021 cases 11 ## 4 Italy 2021 population 34575 ## 5 France 2020 cases 13 ## 6 France 2020 population 7656564 ## 7 France 2021 cases 10 ## 8 France 2021 population 7656874 ## 9 Germany 2020 cases 11 ## 10 Germany 2020 population 909987 ## 11 Germany 2021 cases 9 ## 12 Germany 2021 population 910987 ## 13 Belgium 2020 cases 14 ## 14 Belgium 2020 population 87667 ## 15 Belgium 2021 cases 8 ## 16 Belgium 2021 population 87887 Here we have one column that actually represents two distinct variables, both indicating an integer count of different entities though. They should be two separate columns. We can do this, by pivoting the table to a wider format, as with the code below:\ntable_diffvars %% pivot_wider( names_from = type, values_from = count ) ## # A tibble: 8 x 4 ## country year cases population ##     ## 1 Italy 2020 12 34564 ## 2 Italy 2021 11 34575 ## 3 France 2020 13 7656564 ## 4 France 2021 10 7656874 ## 5 Germany 2020 11 909987 ## 6 Germany 2021 9 910987 ## 7 Belgium 2020 14 87667 ## 8 Belgium 2021 8 87887  Filter Filtering is an important step in tidying the data and sometimes also in simplifying the plots: this can be done in tidyverse with the following code:\ntable_diffvars %% pivot_wider( names_from = type, values_from = count ) %% filter(year == 2020) ## # A tibble: 4 x 4 ## country year cases population ##     ## 1 Italy 2020 12 34564 ## 2 France 2020 13 7656564 ## 3 Germany 2020 11 909987 ## 4 Belgium 2020 14 87667  Select we can also select specific columns\ntable_diffvars %% pivot_wider( names_from = type, values_from = count ) %% select(country,year,population) ## # A tibble: 8 x 3 ## country year population ##    ## 1 Italy 2020 34564 ## 2 Italy 2021 34575 ## 3 France 2020 7656564 ## 4 France 2021 7656874 ## 5 Germany 2020 909987 ## 6 Germany 2021 910987 ## 7 Belgium 2020 87667 ## 8 Belgium 2021 87887  Add variables and use mutate to add variables from calculations we have made:\ntable_diffvars %% pivot_wider( names_from = type, values_from = count ) %% mutate( perc_cases = cases/population * 100 ) ## # A tibble: 8 x 5 ## country year cases population perc_cases ##      ## 1 Italy 2020 12 34564 0.0347 ## 2 Italy 2021 11 34575 0.0318 ## 3 France 2020 13 7656564 0.000170 ## 4 France 2021 10 7656874 0.000131 ## 5 Germany 2020 11 909987 0.00121 ## 6 Germany 2021 9 910987 0.000988 ## 7 Belgium 2020 14 87667 0.0160 ## 8 Belgium 2021 8 87887 0.00910  Groups and summaries Grouping the data is also an important tool to better represent the information we have in our datasets, and we can then create summaries resulting from the operations done by groups:\ntable_diffvars %% pivot_wider( names_from = type, values_from = count ) %% mutate( perc_cases = cases/population * 100 ) %% group_by(country) %% summarise( avg_population = mean(population), avg_cases = mean(cases) ) ## # A tibble: 4 x 3 ## country avg_population avg_cases ##    ## 1 Belgium 87777 11 ## 2 France 7656719 11.5 ## 3 Germany 910487 10 ## 4 Italy 34570. 11.5  Arrange rows Rows can be arranged using the arrange function:\ntable_diffvars %% pivot_wider( names_from = type, values_from = count ) %% mutate( perc_cases = cases/population * 100 ) %% group_by(country) %% summarise( avg_population = mean(population), avg_cases = mean(cases) ) %% arrange(avg_population) ## # A tibble: 4 x 3 ## country avg_population avg_cases ##    ## 1 Italy 34570. 11.5 ## 2 Belgium 87777 11 ## 3 Germany 910487 10 ## 4 France 7656719 11.5   Basic concepts ggplot is built as introduced in the presentation using the key components of grammar of graphics:\n a dataset mapping the data to an aestethics a statistical transformation a geometry (which might involve a statistics) scales facets  To see this we are going to use the dataset mpg which reports fuel data on 38 popular models of cars.\nLet’s see them:\nggplot(mpg, aes(x=class, fill = class))+ geom_bar() if we don’t use a y value, we can use the geometry “bar”which relies on counts as default statistics. Alternatively we can transform the data\nmpg %% group_by(class) %% summarise(count = n()) %% ggplot(aes(x=class, y=count, fill = class))+ geom_bar(stat = \"identity\") The result is identical, we have changed the statistics of the geometry to accept an exact value for the y-axis without calculating a count or frequency.\nThis allows us to do an additional step, useful for visualisation, i.e. arranging the bars\nmpg %% group_by(class) %% summarise(count = n()) %% ggplot(aes(x=reorder(class, -count), y=count, fill = class))+ geom_bar(stat = \"identity\") Another thing many people like to do is to flip the coordinates\nmpg %% group_by(class) %% summarise(count = n()) %% ggplot(aes(x=reorder(class, -count), y=count, fill = class))+ geom_bar(stat = \"identity\")+ coord_flip() We need to customise a little the plot by adding the correct labels, remembering we flipped the coordinates:\nmpg %% group_by(class) %% summarise(count = n()) %% ggplot(aes(x=reorder(class, -count), y=count, fill = class))+ geom_bar(stat = \"identity\")+ coord_flip()+ labs(y = \"no. cars\", x=\"class of car\", title = \"Number of cars produced by class\") Now let’s have a look at other elements, like facets and use another plot type:\nggplot(mpg, aes(x=displ, y=hwy))+ geom_point(colour = \"blue\")  Representations This allows us to introduce one of the three elements of visualisation seen in the introduction, and start with relationships.\nRelationships Scatterplots with fits are usually a good (and very “statistical”) way to show relationships or trends\nWe can modify the above plot to show the fit:\nggplot(mpg, aes(x=displ, y=hwy))+ geom_point(colour = \"blue\")+ geom_smooth(method = \"lm\", colour = \"red\") If we believe a linear model (i.e. lm) is not particularly ideal here, we can use a local polynomial regression or LOESS (which stands for locally estimated scatterplot smoothing):\nggplot(mpg, aes(x=displ, y=hwy))+ geom_point(colour = \"blue\")+ geom_smooth(method = \"loess\", colour = \"red\") The relationships between engine displacement and fuel consumption on the highway might be however different depending on the manufacturer. We could explore this by using faceting:\nggplot(mpg, aes(x=displ, y=hwy))+ geom_point(colour = \"blue\")+ geom_smooth(method = \"loess\", colour = \"red\")+ facet_wrap(~manufacturer, ncol = 3) Here we can already see:\nsome manufacturer have a smaller range of engine displacement engines some datapoints are not enough to fit a loess regression  We can also cheat a little on the axes to view better some data, but this is something one should be very careful about:\nggplot(mpg, aes(x=displ, y=hwy))+ geom_point(colour = \"blue\")+ geom_smooth(method = \"loess\", colour = \"red\")+ facet_wrap(~manufacturer, ncol = 3, scales = \"free\")  Patterns Another element we have seen in the introduction is that we are pretty good at spotting patterns, and particularly trends (for example over time) Here, a basic rule is to remember we should simplify / reduce data points, to highlight the pattern better.\nIn this case we use the dataset on housing sales in texas.\nggplot(txhousing, aes(x=date, y=sales))+ geom_bar(stat = \"identity\") The plot is a little messy, and doesn’t allow us to see very well. We can try and simplify the plot by plotting by year, and for this we need to summarise the data a little as we have seen before:\ntxhousing %% group_by(year) %% summarise(avg_sales = mean(sales, na.rm = TRUE), sum_sales = sum(sales, na.rm = TRUE)) %% ggplot(aes(x = year, y = sum_sales))+ geom_bar(stat = \"identity\") Besides bars, lines are also a very good way in particular if we wanted to compare things: we might want to see the trend of sales over the years, and by city\nggplot(txhousing, aes(x=date, y=sales, colour = city))+ geom_line() however, this is terribly messy. there’s a few things we can do, with the goal of reducing the complexity.\nFirst of all, we can remove the legend:\nggplot(txhousing, aes(x=date, y=sales, colour = city))+ geom_line()+ theme(legend.position = \"none\") But the plot is unreadable and there’s so many colours.\nPlus, we notice also that probably large cities also stand apart, and it becomes difficult to make real comparisons. Here we stress again the relationship between the data and the visualisation. Let’s consider the proportion over the number of listings, i.e. the successful sales if we may.\ntxhousing %% mutate(proportion_sales = sales / listings * 100) %% ggplot(aes(x=date, y=proportion_sales, colour = city))+ geom_line()+ theme(legend.position = \"none\") Clearly there’s something going on - whatever the reasons in the data - when the sales are higher than listings, let’s check it:\ntxhousing %% filter(sales  listings) ## # A tibble: 5 x 9 ## city year month sales volume median listings inventory date ##          ## 1 Garland 2015 3 172 25582593 135900 146 0.8 2015. ## 2 Garland 2015 5 195 32018011 151000 177 1 2015. ## 3 Garland 2015 6 212 35772714 154800 208 1.2 2015. ## 4 Midland 2010 2 100 19880017 175400 0 0 2010. ## 5 Odessa 2008 8 150 23100000 136700 91 0.8 2009. We don’t know the reason for this, but let’s remove these data points which seem difficult to explain without additional information:\ntxhousing %% filter(sales % mutate(proportion_sales = sales / listings * 100) %% ggplot(aes(x=date, y=proportion_sales, colour = city))+ geom_line()+ theme(legend.position = \"none\") The plot is still very messy. There’s something we could do, quite easily and it uses the highlights package to highlight only those cities which kept the majority of sales above 25% of the listings:\ntxhousing %% filter(sales % mutate(proportion_sales = sales / listings * 100) %% ggplot(aes(x=date, y=proportion_sales, colour = city))+ geom_line()+ theme(legend.position = \"none\")+ gghighlight(median(proportion_sales)  25) But we could also highlight those below a certain threshold:\ntxhousing %% filter(sales % mutate(proportion_sales = sales / listings * 100) %% ggplot(aes(x=date, y=proportion_sales, colour = city))+ geom_line()+ theme(legend.position = \"none\")+ gghighlight(median(proportion_sales)  25 | median(proportion_sales)  If we don’t like the labels there, we can put them on a side (we need to remove the setting on legends):\ntxhousing %% filter(sales % mutate(proportion_sales = sales / listings * 100) %% ggplot(aes(x=date, y=proportion_sales, colour = city))+ geom_line()+ gghighlight(median(proportion_sales)  25 | median(proportion_sales)   Proportions An interesting data to explore is the expanded sleep dataset on mammals (msleep)\nWe will discuss pie charts in the next tutorial about storytelling. Let’s have a look at a different way to represent proportions, with bubble charts.\nmsleep %% arrange(bodywt) %% filter(!is.na(vore)) %% ggplot(aes(x=sleep_rem, y=sleep_total, colour = vore))+ geom_point(alpha=0.5, aes(size = bodywt)) But we can make it prettier, and control better the size using scales:\nmsleep %% arrange(bodywt) %% filter(!is.na(vore)) %% ggplot(aes(x=sleep_rem, y=sleep_total, colour = vore))+ geom_point(alpha=0.5, aes(size = bodywt))+ scale_size(range = c(2, 30), name=\"Body Weight\")   ",
+  "wordCount" : "2084",
+  "inLanguage": "en",
+  "datePublished": "2022-05-18T00:00:00Z",
+  "dateModified": "2022-05-18T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Francesco"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2022/05/18/introduction-to-ggplot2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lescai Teaching - Documentation pages",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Lescai Teaching - Documentation pages (Alt + H)">Lescai Teaching - Documentation pages</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/lescai-teaching" title="GitHub">
+                    <span>GitHub</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://lescailab.unipv.it" title="Lab">
+                    <span>Lab</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Introduction to ggplot2
+    </h1>
+    <div class="post-meta"><span title='2022-05-18 00:00:00 +0000 UTC'>May 18, 2022</span>&nbsp;·&nbsp;Francesco
+
+</div>
+  </header> 
+  <div class="post-content">
+<script src="/2022/05/18/introduction-to-ggplot2/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="data-transformation" class="section level1">
+<h1>Data transformation</h1>
+<p>An important tool for tidying data is the option to <em>pivot</em> tables from a wide format to a long format and viceversa.
+Let’s have a look at these two preliminary cases.</p>
+<div id="wide-vs-long" class="section level2">
+<h2>Wide vs Long</h2>
+<p>In the following case we have a clear example where data are not tidy.</p>
+<pre class="r"><code>table_colvars</code></pre>
+<pre><code>## # A tibble: 4 x 4
+##   country `2020` `2021` `2022`
+##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Italy       12      9      7
+## 2 France      13     10      9
+## 3 Germany     11      8     10
+## 4 Belgium     14     12     14</code></pre>
+<p>Columns do not represent different variables, they <strong>are</strong> a variable themselves.
+In order to use these data properly, we should move those values into a column, and therefore pivot the table from this wide format to a longer one.</p>
+<p>We do that, by using the code below:</p>
+<pre class="r"><code>table_colvars %&gt;%
+  pivot_longer(
+    cols = c(`2020`:`2022`),
+    names_to = &quot;year&quot;,
+    values_to = &quot;cases&quot;
+  )</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    country year  cases
+##    &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
+##  1 Italy   2020     12
+##  2 Italy   2021      9
+##  3 Italy   2022      7
+##  4 France  2020     13
+##  5 France  2021     10
+##  6 France  2022      9
+##  7 Germany 2020     11
+##  8 Germany 2021      8
+##  9 Germany 2022     10
+## 10 Belgium 2020     14
+## 11 Belgium 2021     12
+## 12 Belgium 2022     14</code></pre>
+<p>Now colums are consistent with a single variable representation, and rows represent indeed one single record per variable combination.</p>
+<p>Let’s have a look at this second table, were we have the opposite case:</p>
+<pre class="r"><code>table_diffvars</code></pre>
+<pre><code>## # A tibble: 16 x 4
+##    country  year type         count
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+##  1 Italy    2020 cases           12
+##  2 Italy    2020 population   34564
+##  3 Italy    2021 cases           11
+##  4 Italy    2021 population   34575
+##  5 France   2020 cases           13
+##  6 France   2020 population 7656564
+##  7 France   2021 cases           10
+##  8 France   2021 population 7656874
+##  9 Germany  2020 cases           11
+## 10 Germany  2020 population  909987
+## 11 Germany  2021 cases            9
+## 12 Germany  2021 population  910987
+## 13 Belgium  2020 cases           14
+## 14 Belgium  2020 population   87667
+## 15 Belgium  2021 cases            8
+## 16 Belgium  2021 population   87887</code></pre>
+<p>Here we have one column that actually represents two distinct variables, both indicating an integer count of different entities though.
+They should be two separate columns.
+We can do this, by pivoting the table to a wider format, as with the code below:</p>
+<pre class="r"><code>table_diffvars %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  )</code></pre>
+<pre><code>## # A tibble: 8 x 4
+##   country  year cases population
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Italy    2020    12      34564
+## 2 Italy    2021    11      34575
+## 3 France   2020    13    7656564
+## 4 France   2021    10    7656874
+## 5 Germany  2020    11     909987
+## 6 Germany  2021     9     910987
+## 7 Belgium  2020    14      87667
+## 8 Belgium  2021     8      87887</code></pre>
+</div>
+<div id="filter" class="section level2">
+<h2>Filter</h2>
+<p>Filtering is an important step in tidying the data and sometimes also in simplifying the plots: this can be done in tidyverse with the following code:</p>
+<pre class="r"><code>table_diffvars %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) %&gt;%
+  filter(year == 2020)</code></pre>
+<pre><code>## # A tibble: 4 x 4
+##   country  year cases population
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Italy    2020    12      34564
+## 2 France   2020    13    7656564
+## 3 Germany  2020    11     909987
+## 4 Belgium  2020    14      87667</code></pre>
+</div>
+<div id="select" class="section level2">
+<h2>Select</h2>
+<p>we can also select specific columns</p>
+<pre class="r"><code>table_diffvars %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) %&gt;%
+  select(country,year,population)</code></pre>
+<pre><code>## # A tibble: 8 x 3
+##   country  year population
+##   &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Italy    2020      34564
+## 2 Italy    2021      34575
+## 3 France   2020    7656564
+## 4 France   2021    7656874
+## 5 Germany  2020     909987
+## 6 Germany  2021     910987
+## 7 Belgium  2020      87667
+## 8 Belgium  2021      87887</code></pre>
+</div>
+<div id="add-variables" class="section level2">
+<h2>Add variables</h2>
+<p>and use <em>mutate</em> to add variables from calculations we have made:</p>
+<pre class="r"><code>table_diffvars %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) %&gt;%
+  mutate(
+    perc_cases = cases/population * 100
+  )</code></pre>
+<pre><code>## # A tibble: 8 x 5
+##   country  year cases population perc_cases
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Italy    2020    12      34564   0.0347  
+## 2 Italy    2021    11      34575   0.0318  
+## 3 France   2020    13    7656564   0.000170
+## 4 France   2021    10    7656874   0.000131
+## 5 Germany  2020    11     909987   0.00121 
+## 6 Germany  2021     9     910987   0.000988
+## 7 Belgium  2020    14      87667   0.0160  
+## 8 Belgium  2021     8      87887   0.00910</code></pre>
+</div>
+<div id="groups-and-summaries" class="section level2">
+<h2>Groups and summaries</h2>
+<p>Grouping the data is also an important tool to better represent the information we have in our datasets, and we can then create summaries resulting from the operations done by groups:</p>
+<pre class="r"><code>table_diffvars %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) %&gt;%
+  mutate(
+    perc_cases = cases/population * 100
+  ) %&gt;%
+  group_by(country) %&gt;%
+  summarise(
+    avg_population = mean(population),
+    avg_cases = mean(cases)
+  )</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   country avg_population avg_cases
+##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Belgium         87777       11  
+## 2 France        7656719       11.5
+## 3 Germany        910487       10  
+## 4 Italy           34570.      11.5</code></pre>
+</div>
+<div id="arrange-rows" class="section level2">
+<h2>Arrange rows</h2>
+<p>Rows can be arranged using the arrange function:</p>
+<pre class="r"><code>table_diffvars %&gt;%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) %&gt;%
+  mutate(
+    perc_cases = cases/population * 100
+  ) %&gt;%
+  group_by(country) %&gt;%
+  summarise(
+    avg_population = mean(population),
+    avg_cases = mean(cases)
+  ) %&gt;%
+  arrange(avg_population)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   country avg_population avg_cases
+##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Italy           34570.      11.5
+## 2 Belgium         87777       11  
+## 3 Germany        910487       10  
+## 4 France        7656719       11.5</code></pre>
+</div>
+</div>
+<div id="basic-concepts" class="section level1">
+<h1>Basic concepts</h1>
+<p>ggplot is built as introduced in the presentation using the key components of grammar of graphics:</p>
+<ul>
+<li>a dataset</li>
+<li>mapping the data to an aestethics</li>
+<li>a statistical transformation</li>
+<li>a geometry (which might involve a statistics)</li>
+<li>scales</li>
+<li>facets</li>
+</ul>
+<p>To see this we are going to use the dataset <strong>mpg</strong> which reports fuel data on 38 popular models of cars.</p>
+<p>Let’s see them:</p>
+<pre class="r"><code>ggplot(mpg, aes(x=class, fill = class))+
+  geom_bar()</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>if we don’t use a y value, we can use the geometry “bar”which relies on <em>counts</em> as default statistics.
+Alternatively we can transform the data</p>
+<pre class="r"><code>mpg %&gt;%
+  group_by(class) %&gt;%
+  summarise(count = n()) %&gt;%
+  ggplot(aes(x=class, y=count, fill = class))+
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>The result is identical, we have changed the statistics of the geometry to accept an exact value for the y-axis without calculating a count or frequency.</p>
+<p>This allows us to do an additional step, useful for visualisation, i.e. arranging the bars</p>
+<pre class="r"><code>mpg %&gt;%
+  group_by(class) %&gt;%
+  summarise(count = n()) %&gt;%
+  ggplot(aes(x=reorder(class, -count), y=count, fill = class))+
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Another thing many people like to do is to flip the coordinates</p>
+<pre class="r"><code>mpg %&gt;%
+  group_by(class) %&gt;%
+  summarise(count = n()) %&gt;%
+  ggplot(aes(x=reorder(class, -count), y=count, fill = class))+
+  geom_bar(stat = &quot;identity&quot;)+
+  coord_flip()</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>We need to customise a little the plot by adding the correct labels, remembering we flipped the coordinates:</p>
+<pre class="r"><code>mpg %&gt;%
+  group_by(class) %&gt;%
+  summarise(count = n()) %&gt;%
+  ggplot(aes(x=reorder(class, -count), y=count, fill = class))+
+  geom_bar(stat = &quot;identity&quot;)+
+  coord_flip()+
+  labs(y = &quot;no. cars&quot;, x=&quot;class of car&quot;, title = &quot;Number of cars produced by class&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Now let’s have a look at other elements, like facets and use another plot type:</p>
+<pre class="r"><code>ggplot(mpg, aes(x=displ, y=hwy))+
+  geom_point(colour = &quot;blue&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="representations" class="section level1">
+<h1>Representations</h1>
+<p>This allows us to introduce one of the three elements of visualisation seen in the introduction, and start with relationships.</p>
+<div id="relationships" class="section level2">
+<h2>Relationships</h2>
+<p>Scatterplots with fits are usually a good (and very “statistical”) way to show relationships or trends</p>
+<p>We can modify the above plot to show the fit:</p>
+<pre class="r"><code>ggplot(mpg, aes(x=displ, y=hwy))+
+  geom_point(colour = &quot;blue&quot;)+
+  geom_smooth(method = &quot;lm&quot;, colour = &quot;red&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>If we believe a linear model (i.e. <em>lm</em>) is not particularly ideal here, we can use a local polynomial regression or LOESS (which stands for <em>locally estimated scatterplot smoothing</em>):</p>
+<pre class="r"><code>ggplot(mpg, aes(x=displ, y=hwy))+
+  geom_point(colour = &quot;blue&quot;)+
+  geom_smooth(method = &quot;loess&quot;, colour = &quot;red&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The relationships between engine displacement and fuel consumption on the highway might be however different depending on the manufacturer.
+We could explore this by using faceting:</p>
+<pre class="r"><code>ggplot(mpg, aes(x=displ, y=hwy))+
+  geom_point(colour = &quot;blue&quot;)+
+  geom_smooth(method = &quot;loess&quot;, colour = &quot;red&quot;)+
+  facet_wrap(~manufacturer, ncol = 3)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Here we can already see:</p>
+<ol style="list-style-type: decimal">
+<li>some manufacturer have a smaller range of engine displacement engines</li>
+<li>some datapoints are not enough to fit a loess regression</li>
+</ol>
+<p>We can also cheat a little on the axes to view better some data, but this is something one should be very careful about:</p>
+<pre class="r"><code>ggplot(mpg, aes(x=displ, y=hwy))+
+  geom_point(colour = &quot;blue&quot;)+
+  geom_smooth(method = &quot;loess&quot;, colour = &quot;red&quot;)+
+  facet_wrap(~manufacturer, ncol = 3, scales = &quot;free&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="patterns" class="section level2">
+<h2>Patterns</h2>
+<p>Another element we have seen in the introduction is that we are pretty good at spotting patterns, and particularly trends (for example over time)
+Here, a basic rule is to remember we should simplify / reduce data points, to highlight the pattern better.</p>
+<p>In this case we use the dataset on housing sales in texas.</p>
+<pre class="r"><code>ggplot(txhousing,
+       aes(x=date, y=sales))+
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>The plot is a little messy, and doesn’t allow us to see very well.
+We can try and simplify the plot by plotting by year, and for this we need to summarise the data a little as we have seen before:</p>
+<pre class="r"><code>txhousing %&gt;%
+  group_by(year) %&gt;%
+  summarise(avg_sales = mean(sales, na.rm = TRUE),
+            sum_sales = sum(sales, na.rm = TRUE)) %&gt;%
+  ggplot(aes(x = year, y = sum_sales))+
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Besides bars, lines are also a very good way in particular if we wanted to compare things: we might want to see the trend of sales over the years, and by city</p>
+<pre class="r"><code>ggplot(txhousing, aes(x=date, y=sales, colour = city))+
+  geom_line()</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>however, this is terribly messy.
+there’s a few things we can do, with the goal of reducing the complexity.</p>
+<p>First of all, we can remove the legend:</p>
+<pre class="r"><code>ggplot(txhousing, aes(x=date, y=sales, colour = city))+
+  geom_line()+
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>But the plot is unreadable and there’s so many colours.</p>
+<p>Plus, we notice also that probably large cities also stand apart, and it becomes difficult to make real comparisons.
+Here we stress again the relationship between the data and the visualisation.
+Let’s consider the proportion over the number of listings, i.e. the successful sales if we may.</p>
+<pre class="r"><code>txhousing %&gt;%
+  mutate(proportion_sales = sales / listings * 100) %&gt;%
+  ggplot(aes(x=date, y=proportion_sales, colour = city))+
+  geom_line()+
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>Clearly there’s something going on - whatever the reasons in the data - when the sales are higher than listings, let’s check it:</p>
+<pre class="r"><code>txhousing %&gt;%
+  filter(sales &gt; listings)</code></pre>
+<pre><code>## # A tibble: 5 x 9
+##   city     year month sales   volume median listings inventory  date
+##   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 Garland  2015     3   172 25582593 135900      146       0.8 2015.
+## 2 Garland  2015     5   195 32018011 151000      177       1   2015.
+## 3 Garland  2015     6   212 35772714 154800      208       1.2 2015.
+## 4 Midland  2010     2   100 19880017 175400        0       0   2010.
+## 5 Odessa   2008     8   150 23100000 136700       91       0.8 2009.</code></pre>
+<p>We don’t know the reason for this, but let’s remove these data points which seem difficult to explain without additional information:</p>
+<pre class="r"><code>txhousing %&gt;%
+  filter(sales &lt; listings) %&gt;%
+  mutate(proportion_sales = sales / listings * 100) %&gt;%
+  ggplot(aes(x=date, y=proportion_sales, colour = city))+
+  geom_line()+
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>The plot is still very messy.
+There’s something we could do, quite easily and it uses the highlights package to highlight only those cities which kept the majority of sales above 25% of the listings:</p>
+<pre class="r"><code>txhousing %&gt;%
+  filter(sales &lt; listings) %&gt;%
+  mutate(proportion_sales = sales / listings * 100) %&gt;%
+  ggplot(aes(x=date, y=proportion_sales, colour = city))+
+  geom_line()+
+  theme(legend.position = &quot;none&quot;)+
+  gghighlight(median(proportion_sales) &gt; 25)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>But we could also highlight those below a certain threshold:</p>
+<pre class="r"><code>txhousing %&gt;%
+  filter(sales &lt; listings) %&gt;%
+  mutate(proportion_sales = sales / listings * 100) %&gt;%
+  ggplot(aes(x=date, y=proportion_sales, colour = city))+
+  geom_line()+
+  theme(legend.position = &quot;none&quot;)+
+  gghighlight(median(proportion_sales) &gt; 25 | median(proportion_sales) &lt; 5)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>If we don’t like the labels there, we can put them on a side (we need to remove the setting on legends):</p>
+<pre class="r"><code>txhousing %&gt;%
+  filter(sales &lt; listings) %&gt;%
+  mutate(proportion_sales = sales / listings * 100) %&gt;%
+  ggplot(aes(x=date, y=proportion_sales, colour = city))+
+  geom_line()+
+  gghighlight(median(proportion_sales) &gt; 25 | median(proportion_sales) &lt; 5, use_direct_label = FALSE)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+<div id="proportions" class="section level2">
+<h2>Proportions</h2>
+<p>An interesting data to explore is the expanded sleep dataset on mammals (msleep)</p>
+<p>We will discuss pie charts in the next tutorial about storytelling.
+Let’s have a look at a different way to represent proportions, with bubble charts.</p>
+<pre class="r"><code>msleep %&gt;%
+  arrange(bodywt) %&gt;%
+  filter(!is.na(vore)) %&gt;%
+  ggplot(aes(x=sleep_rem, y=sleep_total, colour = vore))+
+  geom_point(alpha=0.5, aes(size = bodywt))</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>But we can make it prettier, and control better the size using scales:</p>
+<pre class="r"><code>msleep %&gt;%
+  arrange(bodywt) %&gt;%
+  filter(!is.na(vore)) %&gt;%
+  ggplot(aes(x=sleep_rem, y=sleep_total, colour = vore))+
+  geom_point(alpha=0.5, aes(size = bodywt))+
+  scale_size(range = c(2, 30), name=&quot;Body Weight&quot;)</code></pre>
+<p><img src="/2022/05/18/introduction-to-ggplot2/index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Lescai Teaching - Documentation pages</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

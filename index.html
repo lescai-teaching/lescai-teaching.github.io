@@ -142,6 +142,36 @@
 
 <article class="first-entry"> 
   <header class="entry-header">
+    <h2>Introduction to ggplot2
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.
+Wide vs Long In the following case we have a clear example where data are not tidy.
+table_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves....</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-05-18 00:00:00 +0000 UTC'>May 18, 2022</span>&nbsp;·&nbsp;Francesco</footer>
+  <a class="entry-link" aria-label="post link to Introduction to ggplot2" href="/2022/05/18/introduction-to-ggplot2/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Storytelling with ggplot2
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.
+First we load the necessary packages:
+library(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:
+data &lt;- read_csv(&#34;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&#34;) We can now inspect what the dataset contains, by printing a table of its variables:
+kable(names(data))     x    Are you self-employed?...</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-05-18 00:00:00 +0000 UTC'>May 18, 2022</span>&nbsp;·&nbsp;Francesco</footer>
+  <a class="entry-link" aria-label="post link to Storytelling with ggplot2" href="/2022/05/18/storytelling-with-ggplot2/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Deploy Docker on AWS VMs
     </h2>
   </header>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Storytelling with ggplot2 | Lescai Teaching - Documentation pages</title>
+<meta name="keywords" content="ggplot, R, dataviz" />
+<meta name="description" content="Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.
+First we load the necessary packages:
+library(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:
+data &lt;- read_csv(&quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&quot;) We can now inspect what the dataset contains, by printing a table of its variables:
+kable(names(data))     x    Are you self-employed?">
+<meta name="author" content="Francesco">
+<link rel="canonical" href="/2022/05/18/storytelling-with-ggplot2/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Storytelling with ggplot2" />
+<meta property="og:description" content="Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.
+First we load the necessary packages:
+library(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:
+data &lt;- read_csv(&quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&quot;) We can now inspect what the dataset contains, by printing a table of its variables:
+kable(names(data))     x    Are you self-employed?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2022/05/18/storytelling-with-ggplot2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-05-18T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-05-18T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Storytelling with ggplot2"/>
+<meta name="twitter:description" content="Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.
+First we load the necessary packages:
+library(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:
+data &lt;- read_csv(&quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&quot;) We can now inspect what the dataset contains, by printing a table of its variables:
+kable(names(data))     x    Are you self-employed?"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Storytelling with ggplot2",
+      "item": "/2022/05/18/storytelling-with-ggplot2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Storytelling with ggplot2",
+  "name": "Storytelling with ggplot2",
+  "description": "Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.\nFirst we load the necessary packages:\nlibrary(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:\ndata \u0026lt;- read_csv(\u0026quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv\u0026quot;) We can now inspect what the dataset contains, by printing a table of its variables:\nkable(names(data))     x    Are you self-employed?",
+  "keywords": [
+    "ggplot", "R", "dataviz"
+  ],
+  "articleBody": "  Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.\nFirst we load the necessary packages:\nlibrary(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:\ndata  We can now inspect what the dataset contains, by printing a table of its variables:\nkable(names(data))     x    Are you self-employed?  How many employees does your company or organization have?  Is your employer primarily a tech company/organization?  Is your primary role within your company related to tech/IT?  Does your employer provide mental health benefits as part of healthcare coverage?  Do you know the options for mental health care available under your employer-provided coverage?  Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?  Does your employer offer resources to learn more about mental health concerns and options for seeking help?  Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?  If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:  Do you think that discussing a mental health disorder with your employer would have negative consequences?  Do you think that discussing a physical health issue with your employer would have negative consequences?  Would you feel comfortable discussing a mental health disorder with your coworkers?  Would you feel comfortable discussing a mental health disorder with your direct supervisor(s)?  Do you feel that your employer takes mental health as seriously as physical health?  Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?  Do you have medical coverage (private insurance or state-provided) which includes treatment of mental health issues?  Do you know local or online resources to seek help for a mental health disorder?  If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to clients or business contacts?  If you have revealed a mental health issue to a client or business contact, do you believe this has impacted you negatively?  If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?  If you have revealed a mental health issue to a coworker or employee, do you believe this has impacted you negatively?  Do you believe your productivity is ever affected by a mental health issue?  If yes, what percentage of your work time (time performing primary or secondary job functions) is affected by a mental health issue?  Do you have previous employers?  Have your previous employers provided mental health benefits?  Were you aware of the options for mental health care provided by your previous employers?  Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?  Did your previous employers provide resources to learn more about mental health issues and how to seek help?  Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?  Do you think that discussing a mental health disorder with previous employers would have negative consequences?  Do you think that discussing a physical health issue with previous employers would have negative consequences?  Would you have been willing to discuss a mental health issue with your previous co-workers?  Would you have been willing to discuss a mental health issue with your direct supervisor(s)?  Did you feel that your previous employers took mental health as seriously as physical health?  Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?  Would you be willing to bring up a physical health issue with a potential employer in an interview?  Why or why not?  Would you bring up a mental health issue with a potential employer in an interview?  Why or why not?_1  Do you feel that being identified as a person with a mental health issue would hurt your career?  Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?  How willing would you be to share with friends and family that you have a mental illness?  Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?  Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?  Do you have a family history of mental illness?  Have you had a mental health disorder in the past?  Do you currently have a mental health disorder?  If yes, what condition(s) have you been diagnosed with?  If maybe, what condition(s) do you believe you have?  Have you been diagnosed with a mental health condition by a medical professional?  If so, what condition(s) were you diagnosed with?  Have you ever sought treatment for a mental health issue from a mental health professional?  If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?  If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?  What is your age?  What is your gender?  What country do you live in?  What US state or territory do you live in?  What country do you work in?  What US state or territory do you work in?  Which of the following best describes your work position?  Do you work remotely?     Exploring the data here you can use tab, to navigate long columns / variable names\ndata %% ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar() first I need to remove NA values\ndata %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar() the title in the legend duplicates information\ndata %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar()+ theme(legend.title = element_blank()) now maybe we could appreciate better the proportions if we fill one column\ndata %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar(position = \"fill\")+ theme(legend.title = element_blank()) but it doesn’t work this way because if we use the x as answer they get separated we could use a trick\ndata %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% ggplot(aes(x=1, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar(position = \"fill\")+ theme(legend.title = element_blank()) but its a trick a better way would be to calculate the values and percentages as well\ndata %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% group_by(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`) %% summarise(count = n()) %% mutate(percent = count / sum(count)) ## # A tibble: 3 x 3 ## `Do you think that discussing a physical health issue with prev… count percent ##    ## 1 None of them 559 0.442 ## 2 Some of them 631 0.499 ## 3 Yes, all of them 74 0.0585 now we can plot again\ndata %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% group_by(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`) %% summarise(count = n()) %% mutate(percent = count / sum(count)) %% ggplot(aes( x=1, y=percent, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar(stat = \"identity\", position = \"fill\")+ theme(legend.title = element_blank()) we can make it prettier\nhealth_issue = data %% filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %% group_by(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`) %% summarise(count = n()) %% mutate(percent = count / sum(count)) %% ggplot(aes( x=1, y=percent, fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?` ))+ geom_bar(stat = \"identity\", position = \"fill\")+ theme(legend.title = element_blank())+ geom_text(aes(label = paste0(round(percent*100, digits = 1), \"%\")), position = position_stack(vjust = 0.5))+ labs(x=\"\", y=\"percent responses\", title = \"Do you think that discussing a physical health issue \\nwith previous employers would have negative consequences?\")+ coord_flip() now we can begin telling a story here\nmental_issue = data %% filter(!is.na(`Do you think that discussing a mental health disorder with previous employers would have negative consequences?`)) %% group_by(`Do you think that discussing a mental health disorder with previous employers would have negative consequences?`) %% summarise(count = n()) %% mutate(percent = count / sum(count)) %% ggplot(aes( x=1, y=percent, fill=`Do you think that discussing a mental health disorder with previous employers would have negative consequences?` ))+ geom_bar(stat = \"identity\", position = \"fill\")+ theme(legend.title = element_blank())+ geom_text(aes(label = paste0(round(percent*100, digits = 1), \"%\")), position = position_stack(vjust = 0.5))+ labs(x=\"\", y=\"percent responses\", title = \"Do you think that discussing a mental health disorder \\nwith previous employers would have negative consequences?\")+ coord_flip() assign them to object\nuse cowplot to arrange\nplot_grid(health_issue, mental_issue, labels = c('A', 'B'), label_size = 12, ncol = 1, align = 'v') of course colours are not in sync explain order of colour = they are assigned in the order we see in the legend the first one is not present in the first plot, so we need to start from second\ncolours = met.brewer(\"Derain\", n=4) Now we can change the colours:\nhealth_issue = health_issue + scale_fill_manual(values = colours[2:4]) mental_issue = mental_issue + scale_fill_manual(values = colours) And assemble the group again\nplot_grid(health_issue, mental_issue, labels = c('A', 'B'), label_size = 12, ncol = 1, align = 'v') we can be more picky in terms of axes and tick marks\nhealth_issue = health_issue + theme( axis.text = element_blank(), axis.ticks = element_blank(), plot.background = element_blank(), panel.grid = element_blank() ) mental_issue = mental_issue + theme( axis.text = element_blank(), axis.ticks = element_blank(), plot.background = element_blank(), panel.grid = element_blank() ) And assemble it again:\nplot_grid(health_issue, mental_issue, labels = c('A', 'B'), label_size = 12, ncol = 1, align = 'v') We might want to add information here, and for example explore the age distribution. However, we don’t want all single age points, but we’d like to have age groups so we can use data transformation to assemble them as follows:\nage_distribution = data %% mutate(age_group = cut( `What is your age?`, breaks = c(0, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100), labels = c(\"Under 20\", \"20-25\", \"26-30\", \"31-35\", \"36-40\", \"41-45\", \"46-50\", \"51-55\", \"56-60\", \"Over 60\") )) %% filter(!is.na(age_group))%% ggplot(aes(x=age_group, fill=`Have you been diagnosed with a mental health condition by a medical professional?`))+ geom_bar(position = \"dodge\")+ theme(legend.title = element_blank())+ labs(title=\"Have you been diagnosed with a mental health condition \\nby a medical professional?\")+ scale_fill_manual(values=met.brewer(\"Juarez\", 2)) Let’s see the result:\nplot(age_distribution) As someone pointed out though, comparison of bars across a span of age groups might be confusing: so we either split the groups, or we use in this case lines do better describe the differences. In this case we need however to change 2 things: - x axis should be continuous - if x is not continuous, stat should be count (as in bars) - x should be numeric: in order to do that, we need to use the factor of its values - we need to add the group element on top of the colour\nage_distribution = data %% mutate(age_group = cut( `What is your age?`, breaks = c(0, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100), labels = c(\"Under 20\", \"20-25\", \"26-30\", \"31-35\", \"36-40\", \"41-45\", \"46-50\", \"51-55\", \"56-60\", \"Over 60\") )) %% filter(!is.na(age_group)) %% ggplot(aes(x=factor(age_group), colour=`Have you been diagnosed with a mental health condition by a medical professional?`, group = `Have you been diagnosed with a mental health condition by a medical professional?`))+ geom_freqpoly(stat = \"count\")+ theme(legend.title = element_blank())+ labs(title=\"Have you been diagnosed with a mental health condition \\nby a medical professional?\")+ scale_fill_manual(values=met.brewer(\"Juarez\", 2)) let’s see the result:\nplot(age_distribution) Pie chart - careful with pie charts.. very bad\ndata %% group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %% summarise(count = n()) %% mutate(percent = count / sum(count) * 100, response = `Do you feel that your employer takes mental health as seriously as physical health?`) %% select(response, count, percent) %% filter(!is.na(response)) %% ggplot(aes(x=\"\", y=percent, fill=response)) + geom_bar(stat=\"identity\", width=1) + coord_polar(\"y\", start=0) remove all stuff\ndata %% group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %% summarise(count = n()) %% mutate(percent = count / sum(count) * 100, response = `Do you feel that your employer takes mental health as seriously as physical health?`) %% select(response, count, percent) %% filter(!is.na(response)) %% ggplot(aes(x=\"\", y=percent, fill=response)) + geom_bar(stat=\"identity\", width=1) + coord_polar(\"y\", start=0)+ theme_void() add labels first compute labels and their position we can use the percentage\nemployer = data %% group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %% summarise(count = n()) %% mutate(percent = count / sum(count) * 100, response = `Do you feel that your employer takes mental health as seriously as physical health?`, percent_label = paste0(round(percent, digits = 1), \"%\") ) %% arrange(percent) %% select(response, count, percent, percent_label) %% filter(!is.na(response)) %% mutate(label_pos = cumsum(percent) - 0.5 * percent) %% ggplot(aes(x=\"\", y=percent, fill=response)) + geom_bar(stat=\"identity\", width=1) + coord_polar(\"y\", start=0)+ theme_void()+ geom_text(aes(y = label_pos, label = percent_label), color = \"white\", size=5) + scale_fill_manual(values = met.brewer(\"Egypt\", n=3))+ labs(title = \"Do you feel that your employer takes \\nmental health as seriously as physical health?\") Let’s see the result:\nplot(employer) now we do have a problem with pie charts in this particular case we notice a little less because we added in the labels with percentages let’s see an alternative\nfirst we save colours\negypt_cols3 = met.brewer(\"Egypt\", n=3) Then we can use the package treemapify to change it to a treemap\nemployers2 = data %% group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %% summarise(count = n()) %% mutate(percent = count / sum(count) * 100, response = `Do you feel that your employer takes mental health as seriously as physical health?`, percent_label = paste0(round(percent, digits = 1), \"%\") ) %% arrange(percent) %% select(response, count, percent, percent_label) %% filter(!is.na(response)) %% ggplot(aes(area=percent, fill=response, label = percent_label)) + geom_treemap()+ geom_treemap_text()+ scale_fill_manual(values = c(\"No\" = egypt_cols3[1], \"Yes\" = egypt_cols3[3], \"I don't know\" = egypt_cols3[2]))+ labs(title = \"Do you feel that your employer takes \\nmental health as seriously as physical health?\") Let’s see the result\nplot(employers2) Now let’s assemble everything together:\ngrid_left  And plot it:\nplot_grid(grid_left, grid_right, labels = c(''), ncol = 2) We can also save this in an SVG, which would help making further adjustments without spending additional hours in R:\nsvg(filename = \"storytelling_mental-health.svg\", width = 11, height = 8) plot_grid(grid_left, grid_right, labels = c(''), ncol = 2) dev.off() ## quartz_off_screen ## 2  ",
+  "wordCount" : "2680",
+  "inLanguage": "en",
+  "datePublished": "2022-05-18T00:00:00Z",
+  "dateModified": "2022-05-18T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Francesco"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2022/05/18/storytelling-with-ggplot2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lescai Teaching - Documentation pages",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Lescai Teaching - Documentation pages (Alt + H)">Lescai Teaching - Documentation pages</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/lescai-teaching" title="GitHub">
+                    <span>GitHub</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://lescailab.unipv.it" title="Lab">
+                    <span>Lab</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Storytelling with ggplot2
+    </h1>
+    <div class="post-meta"><span title='2022-05-18 00:00:00 +0000 UTC'>May 18, 2022</span>&nbsp;·&nbsp;Francesco
+
+</div>
+  </header> 
+  <div class="post-content">
+<script src="/2022/05/18/storytelling-with-ggplot2/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="loading-data" class="section level1">
+<h1>Loading data</h1>
+<p>We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.</p>
+<p>First we load the necessary packages:</p>
+<pre class="r"><code>library(tidyverse)
+library(cowplot)
+library(gghighlight)
+library(knitr)
+library(MetBrewer)
+library(treemapify)</code></pre>
+<p>Then we can load the dataset straight from the repository on github:</p>
+<pre class="r"><code>data &lt;- read_csv(&quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&quot;)</code></pre>
+<p>We can now inspect what the dataset contains, by printing a table of its variables:</p>
+<pre class="r"><code>kable(names(data))</code></pre>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Are you self-employed?</td>
+</tr>
+<tr class="even">
+<td align="left">How many employees does your company or organization have?</td>
+</tr>
+<tr class="odd">
+<td align="left">Is your employer primarily a tech company/organization?</td>
+</tr>
+<tr class="even">
+<td align="left">Is your primary role within your company related to tech/IT?</td>
+</tr>
+<tr class="odd">
+<td align="left">Does your employer provide mental health benefits as part of healthcare coverage?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you know the options for mental health care available under your employer-provided coverage?</td>
+</tr>
+<tr class="odd">
+<td align="left">Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?</td>
+</tr>
+<tr class="even">
+<td align="left">Does your employer offer resources to learn more about mental health concerns and options for seeking help?</td>
+</tr>
+<tr class="odd">
+<td align="left">Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?</td>
+</tr>
+<tr class="even">
+<td align="left">If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you think that discussing a mental health disorder with your employer would have negative consequences?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you think that discussing a physical health issue with your employer would have negative consequences?</td>
+</tr>
+<tr class="odd">
+<td align="left">Would you feel comfortable discussing a mental health disorder with your coworkers?</td>
+</tr>
+<tr class="even">
+<td align="left">Would you feel comfortable discussing a mental health disorder with your direct supervisor(s)?</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you feel that your employer takes mental health as seriously as physical health?</td>
+</tr>
+<tr class="even">
+<td align="left">Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you have medical coverage (private insurance or state-provided) which includes treatment of  mental health issues?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you know local or online resources to seek help for a mental health disorder?</td>
+</tr>
+<tr class="odd">
+<td align="left">If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to clients or business contacts?</td>
+</tr>
+<tr class="even">
+<td align="left">If you have revealed a mental health issue to a client or business contact, do you believe this has impacted you negatively?</td>
+</tr>
+<tr class="odd">
+<td align="left">If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?</td>
+</tr>
+<tr class="even">
+<td align="left">If you have revealed a mental health issue to a coworker or employee, do you believe this has impacted you negatively?</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you believe your productivity is ever affected by a mental health issue?</td>
+</tr>
+<tr class="even">
+<td align="left">If yes, what percentage of your work time (time performing primary or secondary job functions) is affected by a mental health issue?</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you have previous employers?</td>
+</tr>
+<tr class="even">
+<td align="left">Have your previous employers provided mental health benefits?</td>
+</tr>
+<tr class="odd">
+<td align="left">Were you aware of the options for mental health care provided by your previous employers?</td>
+</tr>
+<tr class="even">
+<td align="left">Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?</td>
+</tr>
+<tr class="odd">
+<td align="left">Did your previous employers provide resources to learn more about mental health issues and how to seek help?</td>
+</tr>
+<tr class="even">
+<td align="left">Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you think that discussing a mental health disorder with previous employers would have negative consequences?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you think that discussing a physical health issue with previous employers would have negative consequences?</td>
+</tr>
+<tr class="odd">
+<td align="left">Would you have been willing to discuss a mental health issue with your previous co-workers?</td>
+</tr>
+<tr class="even">
+<td align="left">Would you have been willing to discuss a mental health issue with your direct supervisor(s)?</td>
+</tr>
+<tr class="odd">
+<td align="left">Did you feel that your previous employers took mental health as seriously as physical health?</td>
+</tr>
+<tr class="even">
+<td align="left">Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?</td>
+</tr>
+<tr class="odd">
+<td align="left">Would you be willing to bring up a physical health issue with a potential employer in an interview?</td>
+</tr>
+<tr class="even">
+<td align="left">Why or why not?</td>
+</tr>
+<tr class="odd">
+<td align="left">Would you bring up a mental health issue with a potential employer in an interview?</td>
+</tr>
+<tr class="even">
+<td align="left">Why or why not?_1</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you feel that being identified as a person with a mental health issue would hurt your career?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?</td>
+</tr>
+<tr class="odd">
+<td align="left">How willing would you be to share with friends and family that you have a mental illness?</td>
+</tr>
+<tr class="even">
+<td align="left">Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?</td>
+</tr>
+<tr class="odd">
+<td align="left">Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you have a family history of mental illness?</td>
+</tr>
+<tr class="odd">
+<td align="left">Have you had a mental health disorder in the past?</td>
+</tr>
+<tr class="even">
+<td align="left">Do you currently have a mental health disorder?</td>
+</tr>
+<tr class="odd">
+<td align="left">If yes, what condition(s) have you been diagnosed with?</td>
+</tr>
+<tr class="even">
+<td align="left">If maybe, what condition(s) do you believe you have?</td>
+</tr>
+<tr class="odd">
+<td align="left">Have you been diagnosed with a mental health condition by a medical professional?</td>
+</tr>
+<tr class="even">
+<td align="left">If so, what condition(s) were you diagnosed with?</td>
+</tr>
+<tr class="odd">
+<td align="left">Have you ever sought treatment for a mental health issue from a mental health professional?</td>
+</tr>
+<tr class="even">
+<td align="left">If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?</td>
+</tr>
+<tr class="odd">
+<td align="left">If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?</td>
+</tr>
+<tr class="even">
+<td align="left">What is your age?</td>
+</tr>
+<tr class="odd">
+<td align="left">What is your gender?</td>
+</tr>
+<tr class="even">
+<td align="left">What country do you live in?</td>
+</tr>
+<tr class="odd">
+<td align="left">What US state or territory do you live in?</td>
+</tr>
+<tr class="even">
+<td align="left">What country do you work in?</td>
+</tr>
+<tr class="odd">
+<td align="left">What US state or territory do you work in?</td>
+</tr>
+<tr class="even">
+<td align="left">Which of the following best describes your work position?</td>
+</tr>
+<tr class="odd">
+<td align="left">Do you work remotely?</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exploring-the-data" class="section level1">
+<h1>Exploring the data</h1>
+<p>here you can use tab, to navigate long columns / variable names</p>
+<pre class="r"><code>data %&gt;%
+  ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`,
+             fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+             ))+
+  geom_bar()</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>first I need to remove NA values</p>
+<pre class="r"><code>data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`,
+             fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+  ))+
+  geom_bar()</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>the title in the legend duplicates information</p>
+<pre class="r"><code>data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`,
+             fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+  ))+
+  geom_bar()+
+  theme(legend.title = element_blank())</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>now maybe we could appreciate better the proportions if we fill one column</p>
+<pre class="r"><code>data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  ggplot(aes(x=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`,
+             fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+  ))+
+  geom_bar(position = &quot;fill&quot;)+
+  theme(legend.title = element_blank())</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>but it doesn’t work this way because if we use the x as answer they get separated
+we could use a trick</p>
+<pre class="r"><code>data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  ggplot(aes(x=1,
+             fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+  ))+
+  geom_bar(position = &quot;fill&quot;)+
+  theme(legend.title = element_blank())</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>but its a trick
+a better way would be to calculate the values
+and percentages as well</p>
+<pre class="r"><code>data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  group_by(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count))</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   `Do you think that discussing a physical health issue with prev… count percent
+##   &lt;chr&gt;                                                            &lt;int&gt;   &lt;dbl&gt;
+## 1 None of them                                                       559  0.442 
+## 2 Some of them                                                       631  0.499 
+## 3 Yes, all of them                                                    74  0.0585</code></pre>
+<p>now we can plot again</p>
+<pre class="r"><code>data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  group_by(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count)) %&gt;%
+  ggplot(aes(
+    x=1,
+    y=percent,
+    fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+  ))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme(legend.title = element_blank())</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>we can make it prettier</p>
+<pre class="r"><code>health_issue = data %&gt;%
+  filter(!is.na(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`)) %&gt;%
+  group_by(`Do you think that discussing a physical health issue with previous employers would have negative consequences?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count)) %&gt;%
+  ggplot(aes(
+    x=1,
+    y=percent,
+    fill=`Do you think that discussing a physical health issue with previous employers would have negative consequences?`
+  ))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme(legend.title = element_blank())+
+  geom_text(aes(label = paste0(round(percent*100, digits = 1), &quot;%&quot;)), position = position_stack(vjust = 0.5))+
+  labs(x=&quot;&quot;, 
+       y=&quot;percent responses&quot;,
+       title = &quot;Do you think that discussing a physical health issue \nwith previous employers would have negative consequences?&quot;)+
+  coord_flip()</code></pre>
+<p>now we can begin telling a story here</p>
+<pre class="r"><code>mental_issue = data %&gt;%
+  filter(!is.na(`Do you think that discussing a mental health disorder with previous employers would have negative consequences?`)) %&gt;%
+  group_by(`Do you think that discussing a mental health disorder with previous employers would have negative consequences?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count)) %&gt;%
+  ggplot(aes(
+    x=1,
+    y=percent,
+    fill=`Do you think that discussing a mental health disorder with previous employers would have negative consequences?`
+  ))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme(legend.title = element_blank())+
+  geom_text(aes(label = paste0(round(percent*100, digits = 1), &quot;%&quot;)), position = position_stack(vjust = 0.5))+
+  labs(x=&quot;&quot;, 
+       y=&quot;percent responses&quot;,
+       title = &quot;Do you think that discussing a mental health disorder \nwith previous employers would have negative consequences?&quot;)+
+  coord_flip()</code></pre>
+<p>assign them to object</p>
+<p>use cowplot to arrange</p>
+<pre class="r"><code>plot_grid(health_issue, mental_issue, labels = c(&#39;A&#39;, &#39;B&#39;), label_size = 12, ncol = 1, align = &#39;v&#39;)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>of course colours are not in sync
+explain order of colour = they are assigned in the order we see in the legend
+the first one is not present in the first plot, so we need to start from second</p>
+<pre class="r"><code>colours = met.brewer(&quot;Derain&quot;, n=4)</code></pre>
+<p>Now we can change the colours:</p>
+<pre class="r"><code>health_issue = health_issue + scale_fill_manual(values = colours[2:4])
+mental_issue = mental_issue + scale_fill_manual(values = colours)</code></pre>
+<p>And assemble the group again</p>
+<pre class="r"><code>plot_grid(health_issue, mental_issue, labels = c(&#39;A&#39;, &#39;B&#39;), label_size = 12, ncol = 1, align = &#39;v&#39;)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>we can be more picky in terms of axes and tick marks</p>
+<pre class="r"><code>health_issue = health_issue + theme(
+  axis.text = element_blank(),
+  axis.ticks = element_blank(),
+  plot.background = element_blank(),
+  panel.grid = element_blank()
+)
+
+mental_issue = mental_issue + theme(
+  axis.text = element_blank(),
+  axis.ticks = element_blank(),
+  plot.background = element_blank(),
+  panel.grid = element_blank()
+)</code></pre>
+<p>And assemble it again:</p>
+<pre class="r"><code>plot_grid(health_issue, mental_issue, labels = c(&#39;A&#39;, &#39;B&#39;), label_size = 12, ncol = 1, align = &#39;v&#39;)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>We might want to add information here, and for example explore the age distribution.
+However, we don’t want all single age points, but we’d like to have age groups so we can use data transformation to assemble them as follows:</p>
+<pre class="r"><code>age_distribution = data %&gt;%
+  mutate(age_group = cut(
+    `What is your age?`, 
+    breaks = c(0, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100),
+    labels = c(&quot;Under 20&quot;, &quot;20-25&quot;, &quot;26-30&quot;, &quot;31-35&quot;, &quot;36-40&quot;, &quot;41-45&quot;, &quot;46-50&quot;, &quot;51-55&quot;, &quot;56-60&quot;, &quot;Over 60&quot;)
+    )) %&gt;%
+  filter(!is.na(age_group))%&gt;%
+  ggplot(aes(x=age_group, fill=`Have you been diagnosed with a mental health condition by a medical professional?`))+
+  geom_bar(position = &quot;dodge&quot;)+
+  theme(legend.title = element_blank())+
+  labs(title=&quot;Have you been diagnosed with a mental health condition \nby a medical professional?&quot;)+
+  scale_fill_manual(values=met.brewer(&quot;Juarez&quot;, 2))</code></pre>
+<p>Let’s see the result:</p>
+<pre class="r"><code>plot(age_distribution)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>As someone pointed out though, comparison of bars across a span of age groups might be confusing: so we either split the groups, or we use in this case lines do better describe the differences.
+In this case we need however to change 2 things:
+- x axis should be continuous
+- if x is not continuous, stat should be count (as in bars)
+- x should be numeric: in order to do that, we need to use the factor of its values
+- we need to add the <em>group</em> element on top of the colour</p>
+<pre class="r"><code>age_distribution = data %&gt;%
+  mutate(age_group = cut(
+    `What is your age?`, 
+    breaks = c(0, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100),
+    labels = c(&quot;Under 20&quot;, &quot;20-25&quot;, &quot;26-30&quot;, &quot;31-35&quot;, &quot;36-40&quot;, &quot;41-45&quot;, &quot;46-50&quot;, &quot;51-55&quot;, &quot;56-60&quot;, &quot;Over 60&quot;)
+    )) %&gt;%
+  filter(!is.na(age_group)) %&gt;%
+  ggplot(aes(x=factor(age_group), 
+             colour=`Have you been diagnosed with a mental health condition by a medical professional?`, 
+             group = `Have you been diagnosed with a mental health condition by a medical professional?`))+
+  geom_freqpoly(stat = &quot;count&quot;)+
+  theme(legend.title = element_blank())+
+  labs(title=&quot;Have you been diagnosed with a mental health condition \nby a medical professional?&quot;)+
+  scale_fill_manual(values=met.brewer(&quot;Juarez&quot;, 2))</code></pre>
+<p>let’s see the result:</p>
+<pre class="r"><code>plot(age_distribution)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>Pie chart - careful with pie charts.. very bad</p>
+<pre class="r"><code>data %&gt;%
+  group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count) * 100,
+         response = `Do you feel that your employer takes mental health as seriously as physical health?`) %&gt;%
+  select(response, count, percent) %&gt;%
+  filter(!is.na(response)) %&gt;%
+  ggplot(aes(x=&quot;&quot;, y=percent, fill=response)) +
+  geom_bar(stat=&quot;identity&quot;, width=1) +
+  coord_polar(&quot;y&quot;, start=0)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>remove all stuff</p>
+<pre class="r"><code>data %&gt;%
+  group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count) * 100,
+         response = `Do you feel that your employer takes mental health as seriously as physical health?`) %&gt;%
+  select(response, count, percent) %&gt;%
+  filter(!is.na(response)) %&gt;%
+  ggplot(aes(x=&quot;&quot;, y=percent, fill=response)) +
+  geom_bar(stat=&quot;identity&quot;, width=1) +
+  coord_polar(&quot;y&quot;, start=0)+
+  theme_void()</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>add labels
+first compute labels and their position
+we can use the percentage</p>
+<pre class="r"><code>employer = data %&gt;%
+  group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count) * 100,
+         response = `Do you feel that your employer takes mental health as seriously as physical health?`,
+         percent_label = paste0(round(percent, digits = 1), &quot;%&quot;)
+         ) %&gt;%
+  arrange(percent) %&gt;%
+  select(response, count, percent, percent_label) %&gt;%
+  filter(!is.na(response)) %&gt;%
+  mutate(label_pos = cumsum(percent) - 0.5 * percent) %&gt;%
+  ggplot(aes(x=&quot;&quot;, y=percent, fill=response)) +
+  geom_bar(stat=&quot;identity&quot;, width=1) +
+  coord_polar(&quot;y&quot;, start=0)+
+  theme_void()+
+  geom_text(aes(y = label_pos, label = percent_label), color = &quot;white&quot;, size=5) +
+  scale_fill_manual(values = met.brewer(&quot;Egypt&quot;, n=3))+
+  labs(title = &quot;Do you feel that your employer takes \nmental health as seriously as physical health?&quot;)</code></pre>
+<p>Let’s see the result:</p>
+<pre class="r"><code>plot(employer)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>now we do have a problem with pie charts
+in this particular case we notice a little less
+because we added in the labels with percentages
+let’s see an alternative</p>
+<p>first we save colours</p>
+<pre class="r"><code>egypt_cols3 = met.brewer(&quot;Egypt&quot;, n=3)</code></pre>
+<p>Then we can use the package <em>treemapify</em> to change it to a treemap</p>
+<pre class="r"><code>employers2 = data %&gt;%
+  group_by(`Do you feel that your employer takes mental health as seriously as physical health?`) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = count / sum(count) * 100,
+         response = `Do you feel that your employer takes mental health as seriously as physical health?`,
+         percent_label = paste0(round(percent, digits = 1), &quot;%&quot;)
+  ) %&gt;%
+  arrange(percent) %&gt;%
+  select(response, count, percent, percent_label) %&gt;%
+  filter(!is.na(response)) %&gt;%
+  ggplot(aes(area=percent, fill=response, label = percent_label)) +
+  geom_treemap()+
+  geom_treemap_text()+
+  scale_fill_manual(values = c(&quot;No&quot; = egypt_cols3[1],
+                               &quot;Yes&quot; = egypt_cols3[3],
+                               &quot;I don&#39;t know&quot; = egypt_cols3[2]))+
+  labs(title = &quot;Do you feel that your employer takes \nmental health as seriously as physical health?&quot;)</code></pre>
+<p>Let’s see the result</p>
+<pre class="r"><code>plot(employers2)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>Now let’s assemble everything together:</p>
+<pre class="r"><code>grid_left &lt;- plot_grid(employers2, health_issue, mental_issue, labels = c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;), label_size = 12, ncol = 1, align = &#39;v&#39;)
+grid_right &lt;- plot_grid(age_distribution, labels = c(&#39;D&#39;), label_size = 12, ncol = 1, align = &#39;v&#39;)</code></pre>
+<p>And plot it:</p>
+<pre class="r"><code>plot_grid(grid_left, grid_right, labels = c(&#39;&#39;), ncol = 2)</code></pre>
+<p><img src="/2022/05/18/storytelling-with-ggplot2/index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>We can also save this in an SVG, which would help making further adjustments without spending additional hours in R:</p>
+<pre class="r"><code>svg(filename = &quot;storytelling_mental-health.svg&quot;, width = 11, height = 8)
+plot_grid(grid_left, grid_right, labels = c(&#39;&#39;), ncol = 2)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/ggplot/">ggplot</a></li>
+      <li><a href="/tags/r/">R</a></li>
+      <li><a href="/tags/dataviz/">dataviz</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Lescai Teaching - Documentation pages</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

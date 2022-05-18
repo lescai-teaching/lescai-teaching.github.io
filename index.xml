@@ -6,7 +6,31 @@
     <description>Recent content on Lescai Teaching - Documentation pages</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduction to ggplot2</title>
+      <link>/2022/05/18/introduction-to-ggplot2/</link>
+      <pubDate>Wed, 18 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/05/18/introduction-to-ggplot2/</guid>
+      <description>Data transformation An important tool for tidying data is the option to pivot tables from a wide format to a long format and viceversa. Let’s have a look at these two preliminary cases.
+Wide vs Long In the following case we have a clear example where data are not tidy.
+table_colvars ## # A tibble: 4 x 4 ## country `2020` `2021` `2022` ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 Italy 12 9 7 ## 2 France 13 10 9 ## 3 Germany 11 8 10 ## 4 Belgium 14 12 14 Columns do not represent different variables, they are a variable themselves.</description>
+    </item>
+    
+    <item>
+      <title>Storytelling with ggplot2</title>
+      <link>/2022/05/18/storytelling-with-ggplot2/</link>
+      <pubDate>Wed, 18 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/05/18/storytelling-with-ggplot2/</guid>
+      <description>Loading data We have an important dataset on Attitudes towards Mental Illnesses, which is an interactive exploration of 2016 OSMI survey results.
+First we load the necessary packages:
+library(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:
+data &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&amp;quot;) We can now inspect what the dataset contains, by printing a table of its variables:
+kable(names(data))     x    Are you self-employed?</description>
+    </item>
+    
     <item>
       <title>Deploy Docker on AWS VMs</title>
       <link>/2022/02/22/deploy-docker-aws/</link>

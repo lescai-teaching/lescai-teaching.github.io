@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on Lescai Teaching - Documentation pages</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on Lescai Teaching - Documentation pages</description>
+    <title>dataviz on Lescai Teaching - Documentation pages</title>
+    <link>/categories/dataviz/</link>
+    <description>Recent content in dataviz on Lescai Teaching - Documentation pages</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/dataviz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Introduction to ggplot2</title>
       <link>/2022/05/18/introduction-to-ggplot2/</link>
@@ -29,16 +29,6 @@ First we load the necessary packages:
 library(tidyverse) library(cowplot) library(gghighlight) library(knitr) library(MetBrewer) library(treemapify) Then we can load the dataset straight from the repository on github:
 data &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/lescai-teaching/dataviz-rstudio/datasets/mental-heath-in-tech-2016_20161114.csv&amp;quot;) We can now inspect what the dataset contains, by printing a table of its variables:
 kable(names(data))     x    Are you self-employed?</description>
-    </item>
-    
-    <item>
-      <title>Deploy Docker on AWS VMs</title>
-      <link>/2022/02/22/deploy-docker-aws/</link>
-      <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/2022/02/22/deploy-docker-aws/</guid>
-      <description>Overview e motivazione Il lavoro di sviluppo intende affrontare alcune necessità comuni nella organizzazione di laboratori informatici o computazionali:
- gli studenti devono poter utilizzare le risorse di Ateneo, i.e. gli strumenti devono essere disponibili nelle aule informatiche riducendo pero il carico di lavoro del personale di assistenza alle aule (installazione e test di nuovi strumenti); gli strumenti dovrebbero essere accessibili agli studenti anche da casa e/o sui loro computers per esigenze di studio ed esercitazione individuale; gli ambienti di lavoro potrebbero essere utilizzati su servizi disponibili al pubblico gratuitamente o in abbonamento; gli ambienti di lavoro devono essere utilizzati per eventuali esercitazione di esame; gli ambienti di lavoro possono essere eseguiti sul Cloud, ed idealmente accessibili solamente tramite un browser, riducendo cosi la pressione sulle aule informatiche che hanno posti limitati e non possono sempre servire le crescenti esigenze di laboratori computazionali.</description>
     </item>
     
   </channel>
