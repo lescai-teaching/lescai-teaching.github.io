@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>genetics on Lescai Teaching - Documentation pages</title>
+    <link>/tags/genetics/</link>
+    <description>Recent content in genetics on Lescai Teaching - Documentation pages</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/genetics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Clinical Bioinformatics - Coding Variants</title>
+      <link>/2022/08/24/clinical-bioinformatics-coding-variants/</link>
+      <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/08/24/clinical-bioinformatics-coding-variants/</guid>
+      <description>What do you need Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr  Case 1 Clinical profile The case we present first, has a pedigree as follows:
+and the condition of the affected individuals has been diagnosed as:
+ II-1 (proband): delayed psychomotor development, intellectual disability, microcephaly, delayed speech and language development, cerebellar hypoplasia I-2: intellectual disability  Download the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband.</description>
+    </item>
+    
+  </channel>
+</rss>
