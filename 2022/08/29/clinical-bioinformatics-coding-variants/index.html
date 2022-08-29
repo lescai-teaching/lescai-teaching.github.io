@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Clinical Bioinformatics - Coding Variants | Lescai Teaching - Documentation pages</title>
+<meta name="keywords" content="genetics, howto" />
+<meta name="description" content="Course Materials Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr PanelApp  Case 1 Clinical profile The case we present first, has a pedigree as follows:
+The proband is the individual III-38 and he&rsquo;s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.
+Download the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband.">
+<meta name="author" content="Francesco Lescai, Edoardo Errichiello, Marco Savarese">
+<link rel="canonical" href="/2022/08/29/clinical-bioinformatics-coding-variants/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Clinical Bioinformatics - Coding Variants" />
+<meta property="og:description" content="Course Materials Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr PanelApp  Case 1 Clinical profile The case we present first, has a pedigree as follows:
+The proband is the individual III-38 and he&rsquo;s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.
+Download the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2022/08/29/clinical-bioinformatics-coding-variants/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-08-29T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-08-29T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Clinical Bioinformatics - Coding Variants"/>
+<meta name="twitter:description" content="Course Materials Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr PanelApp  Case 1 Clinical profile The case we present first, has a pedigree as follows:
+The proband is the individual III-38 and he&rsquo;s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.
+Download the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Clinical Bioinformatics - Coding Variants",
+      "item": "/2022/08/29/clinical-bioinformatics-coding-variants/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Clinical Bioinformatics - Coding Variants",
+  "name": "Clinical Bioinformatics - Coding Variants",
+  "description": "Course Materials Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr PanelApp  Case 1 Clinical profile The case we present first, has a pedigree as follows:\nThe proband is the individual III-38 and he\u0026rsquo;s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.\nDownload the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband.",
+  "keywords": [
+    "genetics", "howto"
+  ],
+  "articleBody": "Course Materials Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr PanelApp  Case 1 Clinical profile The case we present first, has a pedigree as follows:\nThe proband is the individual III-38 and he’s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.\nDownload the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband. Select the folder tutorial data as indicated in the screenshot below\nClick on the folder for case01 and then click on the VCF file. In order to download it, choose raw data on the right hand side as indicated in the screenshot\nand then from the menu of your browser use save as, in order to save the file on our computer, in your chosen location.\nNow we are ready to begin our analysis.\nAnnotation of the variants In order to identify the candidate causative variants, we need to gather sufficient information (predictions, literature, genomic context, protein information). This process is called annotation. To annotate our VCF file, we will use Ensembl VEP.\nOur data have been aligned to an hg19 reference: this is something to be always careful about, in order to make sure the annotations match the position of the variants and the intervals of the genomic features. In order to choose the hg19/GRCH37 reference (they differ for the prefix chr of the chromosome name), we will select the appropriate link as shown in the screenshot:\nThere are many options now to choose from: follow your lecturer in order to discuss the importance of each one and its selection criteria. More detailed information for your reference, can be found here.\nBefore reviewing the results, it is important to remember the meaning as well as the prioritisation of the predicted consequences in terms of severity\nwith a detailed explanation at the ENSEMBL page.\nFiltering the variants Once you obtain the annotation results, you can click on the view link as indicated below\nreview the information, and apply some filters.\nIn order to view all information in a single page, you should remember to choose all variants from the appropriate setting, and select the important columns you would like to visualise, as shown below:\nThe order of the filters one applies is a subjective choice: we will suggest here a workflow you can follow in order to narrow down your search.\n IMPACT  The category “impact” might be the easiest criterion to use first, since it roughly groups variants based on the predicted consequence they will have on a transcript. The category “HIGH” includes stop and frameshift, start variants and those overlapping the first 2bp of an intron/exon boundary, i.e. predicted to impact donor or acceptor functions in the splicing.\nIn this particular case, if we order by impact, the first variant appearing at the top of our list is rs1240335250.\nWe can identify the following information, in the annotations:\n This is a splice-donor variant, affecting the gene TDP2 SpliceAI indicates an 89% probability of the variant causing a donor loss in the splice site Associated phenotypes include “Autosomal recessive cerebellar ataxia-epilepsy-intellectual disability syndrome due to TUD deficiency”, which is consistent with the clinical presentation and the mode of inheritance in the pedigree if we search the variant in the VCF file we will confirm it’s been sequenced as an homozygous (1/1), which is consistent with the inheritance mode we can observe on the pedigree (autosomal recessive)  In our selection based on the IMPACT category, we also identify another variant causing a frameshift in the OR1B1 gene. This variant is however also homozygous in our VCF but:\n it has been submitted in ClinVar and classified as benign if we follow the ClinVar submission from the link in the annotation we will see that criteria include a high population frequency in 1000 Genomes a similar frequency is reported in our annotation from gnomAD Exome data (45%)  In order to better search for additional variants with phenotype annotations, or inspect more in detail our results, we should download the data in a TXT format and load it in a spreadsheet, as indicated in the screenshot below:\nNB: this is ok for the tutorial and challenge, but it is not recommended when you have hundreds of thousands of annotations.\nAdditional variant data In order to confirm our choice, on the VEP results page we can also gather additional information if the variant has been previously described. In order to do that, we should click on the variant identifier link in the column Existing variant, and choose the additional link more about, as indicated in the figure:\nThis page, when information is available, will display additional data on the phenotype and even predicted 3D models of the protein where the variant might have a consequence.\nExpression data To go even more in depth, we can look into expression data on the GTEx Portal, and verify that the tissue expression of the affected transcript is compatible with our phenotype.\nIn order to do that, right on the GTEx homepage, we can search for the gene identifier (in our case ENSG00000111802)\nGo straight to “exon expression”\nAnd verify that while the canonical transcript is expressed pretty much everywhere, other transcripts affected by this change in splicing might be expressed in tissues compatible with our phenotype.\nCase 2 Clinical Profile This case presents a trio with affected parent and child as follows:\nThe condition has been diagnosed as:\n II-1 (proband): delayed psychomotor development, intellectual disability, microcephaly, delayed speech and language development, cerebellar hypoplasia I-2: intellectual disability  Data download As explained for the previous case, please use the folder tutorial02 in order to download the VCF file originated from an NGS carried out on this proband.\nAnnotation of the variants We can annotate again the variants using VEP (be careful to use the GRCh37 version), as shown for the previous case.\nFiltering the variants If we follow a similar process, we should first rank the variants by IMPACT and inspect (or exclude) those with a HIGH value. Remember to select all variants on the left hand side of the top panel called results preview in order to order all variants we have annotated.\nThis approach gives us 2 variants:\n one stop_gained in the gene MOB3C one start_lost in the gene CCDC108  The second one (on CCDC108) is associated to a Non-syndromic male infertility, and *LoF Tool predicts the variant as benign. We will exclude this variant at this point.\nThe second variant is not associated to any phenotype in our annotation, and does not have a LoFtool prediction. It has however a quite high MAF in the general population (64%) as well as in gnomAD exomes (55%). We can inspect the expression of the affected transcript (ENST00000271139) for this gene (ENSG00000142961) on GTEx, and we will notice that it is only expressed in the testis (compatible with its associated phenotype)\nIn order to search the variants annotation for more details, we suggest to download the TXT file as shown above and open it in a spreadsheet.\nWe could continue our search by applying the following filters:\n exclude pure synonymous variants exclude intron, non-coding, upstream and downstream   select protein coding transcripts only  At this stage, we still have 137 transcripts annotations.\nWe can search through known phenotypes and apply a conditional filter for some keywords like neuro or retardation (or intellectual, or mental, or disability). Phenotype Ontologies would be more precise, and a search on tools different from spreadsheets would allow more options.\nThis narrows down the list to 5 genes:\n MACF1 IRF2BPL MED23 POMT1 CASK  Variations in MACF1 are compatible with the phenotype but they calculated as benign or tolerated by SIFT or POLYPHEN so we should exclude them.\nVariations in IRF2BPL, MED23 and POMT1 have been previosly submitted to ClinVar as benign so we should exclude them too.\nWe are left with a variant in CASK, which is not present in gnomAD and it is classified as a LOW impact, synonymous variant but located in a splice region, although not within the 2bp boundary. SpliceAI gives a relatively solid prediction of this variant being a donor gain with 64% probability. The variant has been previously associated to a mental retardation, x-linked phenotype.\nThe genotype of the variant in the VCF file is compatible with the inheritance mode(s) we could identify from the pedigree provided.\nExpression data In this particular case, expression data do now guide us much into a confirmation because exon 2 which affected by the variant is expressed quite everywhere.\n",
+  "wordCount" : "1422",
+  "inLanguage": "en",
+  "datePublished": "2022-08-29T00:00:00Z",
+  "dateModified": "2022-08-29T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Francesco Lescai, Edoardo Errichiello, Marco Savarese"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2022/08/29/clinical-bioinformatics-coding-variants/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lescai Teaching - Documentation pages",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Lescai Teaching - Documentation pages (Alt + H)">Lescai Teaching - Documentation pages</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/lescai-teaching" title="GitHub">
+                    <span>GitHub</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://lescailab.unipv.it" title="Lab">
+                    <span>Lab</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Clinical Bioinformatics - Coding Variants
+    </h1>
+    <div class="post-meta"><span title='2022-08-29 00:00:00 +0000 UTC'>August 29, 2022</span>&nbsp;·&nbsp;Francesco Lescai, Edoardo Errichiello, Marco Savarese
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="course-materials">Course Materials<a hidden class="anchor" aria-hidden="true" href="#course-materials">#</a></h2>
+<h3 id="data">Data<a hidden class="anchor" aria-hidden="true" href="#data">#</a></h3>
+<ul>
+<li><a href="https://github.com/lescai-teaching/clinical-bioinformatics-2022">Course Materials</a></li>
+</ul>
+<h3 id="web-tools">Web tools<a hidden class="anchor" aria-hidden="true" href="#web-tools">#</a></h3>
+<ul>
+<li><a href="https://www.ensembl.org/Tools/VEP">VEP</a></li>
+<li><a href="https://github.com/Illumina/SpliceAI">SpliceAI</a></li>
+<li><a href="https://www.gtexportal.org/home/">GTEx</a></li>
+<li><a href="https://maayanlab.cloud/Enrichr/">Enrichr</a></li>
+<li><a href="https://panelapp.genomicsengland.co.uk/panels/">PanelApp</a></li>
+</ul>
+<h2 id="case-1">Case 1<a hidden class="anchor" aria-hidden="true" href="#case-1">#</a></h2>
+<h3 id="clinical-profile">Clinical profile<a hidden class="anchor" aria-hidden="true" href="#clinical-profile">#</a></h3>
+<p>The case we present first, has a pedigree as follows:</p>
+<img src="images/case6_tutorial01_pedigree.png" alt="tutoria01 pedigree" width="80%"/>
+<p>The proband is the individual III-38 and he&rsquo;s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.</p>
+<h3 id="download-the-data">Download the data<a hidden class="anchor" aria-hidden="true" href="#download-the-data">#</a></h3>
+<p>Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband.
+Select the folder <em>tutorial data</em> as indicated in the screenshot below</p>
+<img src="images/02_tutorial_data.png" alt="tutorial data" width="80%"/>
+<p>Click on the folder for <em>case01</em> and then click on the VCF file.
+In order to download it, choose <em>raw data</em> on the right hand side as indicated in the screenshot</p>
+<img src="images/03_tutorial_data_save.png" alt="download vcf file" width="80%"/>
+<p>and then from the menu of your browser use <strong>save as</strong>, in order to save the file on our computer, in your chosen location.</p>
+<p>Now we are ready to begin our analysis.</p>
+<h3 id="annotation-of-the-variants">Annotation of the variants<a hidden class="anchor" aria-hidden="true" href="#annotation-of-the-variants">#</a></h3>
+<p>In order to identify the candidate causative variants, we need to gather sufficient information (predictions, literature, genomic context, protein information). This process is called <strong>annotation</strong>.
+To annotate our VCF file, we will use <a href="https://www.ensembl.org/Multi/Tools/VEP">Ensembl VEP</a>.</p>
+<p>Our data have been aligned to an <strong>hg19 reference</strong>: this is something to be always careful about, in order to make sure the annotations match the position of the variants and the intervals of the genomic features.
+In order to choose the <em>hg19/GRCH37</em> reference (they differ for the prefix <em>chr</em> of the chromosome name), we will select the appropriate link as shown in the screenshot:</p>
+<img src="images/04_choose_GRCh37.png" alt="select GRCh37" width="80%"/>
+<p>There are many options now to choose from: follow your lecturer in order to discuss the importance of each one and its selection criteria.
+More detailed information for your reference, can be found <a href="http://grch37.ensembl.org/Help/View?id=484">here</a>.</p>
+<p>Before reviewing the results, it is important to remember the meaning as well as the prioritisation of the predicted consequences in terms of severity</p>
+<img src="images/06_ensembl_consequences.jpg" alt="predicted consequences" width="80%"/>
+<p>with a detailed explanation at the <a href="https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html">ENSEMBL page</a>.</p>
+<h3 id="filtering-the-variants">Filtering the variants<a hidden class="anchor" aria-hidden="true" href="#filtering-the-variants">#</a></h3>
+<p>Once you obtain the annotation results, you can click on the <em>view</em> link as indicated below</p>
+<img src="images/05_view-results.png" alt="view results" width="80%"/>
+<p>review the information, and apply some filters.</p>
+<p>In order to view all information in a single page, you should remember to choose <em>all variants</em> from the appropriate setting, and select the important columns you would like to visualise, as shown below:</p>
+<img src="images/07_view_selection.png" alt="select column" width="60%"/>
+<p>The order of the filters one applies is a subjective choice: we will suggest here a workflow you can follow in order to narrow down your search.</p>
+<ul>
+<li>IMPACT</li>
+</ul>
+<p>The category &ldquo;impact&rdquo; might be the easiest criterion to use first, since it roughly groups variants based on the predicted consequence they will have on a transcript.
+The category &ldquo;HIGH&rdquo; includes <em>stop</em> and <em>frameshift</em>, <em>start</em> variants and those overlapping the first 2bp of an intron/exon boundary, i.e. predicted to impact <em>donor</em> or <em>acceptor</em> functions in the splicing.</p>
+<p>In this particular case, if we order by impact, the first variant appearing at the top of our list is <strong>rs1240335250</strong>.</p>
+<p>We can identify the following information, in the annotations:</p>
+<ol>
+<li>This is a splice-donor variant, affecting the gene <strong>TDP2</strong></li>
+<li>SpliceAI indicates an 89% probability of the variant causing a <em>donor loss</em> in the splice site</li>
+<li>Associated phenotypes include &ldquo;<em>Autosomal recessive cerebellar ataxia-epilepsy-intellectual disability syndrome due to TUD deficiency</em>&rdquo;, which is consistent with the clinical presentation and the mode of inheritance in the pedigree</li>
+<li>if we search the variant in the VCF file we will confirm it&rsquo;s been sequenced as an <em>homozygous</em> (1/1), which is consistent with the inheritance mode we can observe on the pedigree (autosomal recessive)</li>
+</ol>
+<p>In our selection based on the IMPACT category, we also identify another variant causing a frameshift in the <em>OR1B1</em> gene.
+This variant is however also homozygous in our VCF but:</p>
+<ol>
+<li>it has been submitted in ClinVar and classified as <em>benign</em></li>
+<li>if we follow the <a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/403271/?new_evidence=false#id_third">ClinVar submission</a> from the link in the annotation we will see that criteria include a high population frequency in 1000 Genomes</li>
+<li>a similar frequency is reported in our annotation from gnomAD Exome data (45%)</li>
+</ol>
+<p>In order to better search for additional variants with phenotype annotations, or inspect more in detail our results, we should download the data in a TXT format and load it in a spreadsheet, as indicated in the screenshot below:</p>
+<img src="images/08_data_download.png" alt="download annotations" width="80%"/>
+<p>NB: this is ok for the tutorial and challenge, but it is not recommended when you have hundreds of thousands of annotations.</p>
+<h3 id="additional-variant-data">Additional variant data<a hidden class="anchor" aria-hidden="true" href="#additional-variant-data">#</a></h3>
+<p>In order to confirm our choice, on the VEP results page we can also gather additional information if the variant has been previously described.
+In order to do that, we should click on the variant identifier link in the column <strong>Existing variant</strong>, and choose the additional link <em>more about</em>, as indicated in the figure:</p>
+<img src="images/09_existing_variant.png" alt="more about" width="60%"/>
+<p>This page, when information is available, will display additional data on the phenotype and even predicted 3D models of the protein where the variant might have a consequence.</p>
+<h3 id="expression-data">Expression data<a hidden class="anchor" aria-hidden="true" href="#expression-data">#</a></h3>
+<p>To go even more in depth, we can look into expression data on the <a href="https://www.gtexportal.org/home/">GTEx Portal</a>, and verify that the tissue expression of the affected transcript is compatible with our phenotype.</p>
+<p>In order to do that, right on the GTEx homepage, we can search for the gene identifier (in our case <em>ENSG00000111802</em>)</p>
+<img src="images/10_search_gtex.png" alt="search gtex" width="60%"/>
+<p>Go straight to &ldquo;<em>exon expression</em>&rdquo;</p>
+<img src="images/11_exon_expression.png" alt="isoforms" width="60%"/>
+<p>And verify that while the canonical transcript is expressed pretty much everywhere, other transcripts affected by this change in splicing might be expressed in tissues compatible with our phenotype.</p>
+<img src="images/12_isoforms.png" alt="iso expression" width="80%"/>
+<h2 id="case-2">Case 2<a hidden class="anchor" aria-hidden="true" href="#case-2">#</a></h2>
+<h3 id="clinical-profile-1">Clinical Profile<a hidden class="anchor" aria-hidden="true" href="#clinical-profile-1">#</a></h3>
+<p>This case presents a trio with affected parent and child as follows:</p>
+<img src="images/case4_tutorial02_pedigree.png" alt="tutorial02 pedigree" width="50%"/>
+<p>The condition has been diagnosed as:</p>
+<ul>
+<li>II-1 (proband): delayed psychomotor development, intellectual disability, microcephaly, delayed speech and language development, cerebellar hypoplasia</li>
+<li>I-2: intellectual disability</li>
+</ul>
+<h3 id="data-download">Data download<a hidden class="anchor" aria-hidden="true" href="#data-download">#</a></h3>
+<p>As explained for the previous case, please use the folder tutorial02 in order to download the VCF file originated from an NGS carried out on this proband.</p>
+<h3 id="annotation-of-the-variants-1">Annotation of the variants<a hidden class="anchor" aria-hidden="true" href="#annotation-of-the-variants-1">#</a></h3>
+<p>We can annotate again the variants using VEP (be careful to use the GRCh37 version), as shown for the previous case.</p>
+<h3 id="filtering-the-variants-1">Filtering the variants<a hidden class="anchor" aria-hidden="true" href="#filtering-the-variants-1">#</a></h3>
+<p>If we follow a similar process, we should first rank the variants by IMPACT and inspect (or exclude) those with a <em>HIGH</em> value.
+Remember to select <em>all variants</em> on the left hand side of the top panel called <em>results preview</em> in order to order all variants we have annotated.</p>
+<p>This approach gives us 2 variants:</p>
+<ul>
+<li>one <strong>stop_gained</strong> in the gene MOB3C</li>
+<li>one <strong>start_lost</strong> in the gene CCDC108</li>
+</ul>
+<p>The second one (on CCDC108) is associated to a <em>Non-syndromic male infertility</em>, and *<em>LoF Tool</em> predicts the variant as benign. We will exclude this variant at this point.</p>
+<p>The second variant is not associated to any phenotype in our annotation, and does not have a LoFtool prediction.
+It has however a quite high MAF in the general population (64%) as well as in gnomAD exomes (55%).
+We can inspect the expression of the affected transcript (ENST00000271139) for this gene (ENSG00000142961) on GTEx, and we will notice that it is only expressed in the testis (compatible with its associated phenotype)</p>
+<img src="images/14_tut02_expression_lof.png" alt="excluded expression" width="80%"/>
+<p>In order to search the variants annotation for more details, we suggest to download the TXT file as shown above and open it in a spreadsheet.</p>
+<p>We could continue our search by applying the following filters:</p>
+<ul>
+<li>exclude pure synonymous variants</li>
+<li>exclude intron, non-coding, upstream and downstream</li>
+</ul>
+<img src="images/15_filter01.png" alt="first filters" width="50%"/>
+<ul>
+<li>select protein coding transcripts only</li>
+</ul>
+<img src="images/16_filter02.png" alt="second filters" width="50%"/>
+<p>At this stage, we still have 137 transcripts annotations.</p>
+<p>We can search through known phenotypes and apply a conditional filter for some keywords like <em>neuro</em> or <em>retardation</em> (or intellectual, or mental, or disability).
+Phenotype Ontologies would be more precise, and a search on tools different from spreadsheets would allow more options.</p>
+<img src="images/17_filter03.png" alt="third filter" width="800%"/>
+<p>This narrows down the list to 5 genes:</p>
+<ul>
+<li>MACF1</li>
+<li>IRF2BPL</li>
+<li>MED23</li>
+<li>POMT1</li>
+<li>CASK</li>
+</ul>
+<p>Variations in MACF1 are compatible with the <a href="https://omim.org/entry/618325">phenotype</a> but they calculated as <em>benign</em> or <em>tolerated</em> by SIFT or POLYPHEN so we should exclude them.</p>
+<p>Variations in IRF2BPL, MED23 and POMT1 have been previosly submitted to ClinVar as <em>benign</em> so we should exclude them too.</p>
+<p>We are left with a variant in CASK, which is not present in gnomAD and it is classified as a <strong>LOW</strong> impact, <strong>synonymous</strong> variant but located in a splice region, although not within the 2bp boundary.
+SpliceAI gives a relatively solid prediction of this variant being a <em>donor gain</em> with 64% probability.
+The variant has been previously associated to a mental retardation, x-linked <a href="https://omim.org/entry/300749">phenotype</a>.</p>
+<p>The genotype of the variant in the VCF file is compatible with the inheritance mode(s) we could identify from the pedigree provided.</p>
+<h3 id="expression-data-1">Expression data<a hidden class="anchor" aria-hidden="true" href="#expression-data-1">#</a></h3>
+<p>In this particular case, expression data do now guide us much into a confirmation because exon 2 which affected by the variant is expressed quite everywhere.</p>
+<img src="images/18_exon2_gtex.png" alt="exon2 expression" width="90%"/>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/genetics/">genetics</a></li>
+      <li><a href="/tags/howto/">howto</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Lescai Teaching - Documentation pages</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
