@@ -6,13 +6,13 @@
     <description>Recent content in howto on Lescai Teaching - Documentation pages</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/howto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/howto/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Clinical Bioinformatics - Coding Variants</title>
-      <link>/2022/08/24/clinical-bioinformatics-coding-variants/</link>
-      <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
+      <link>/2022/08/29/clinical-bioinformatics-coding-variants/</link>
+      <pubDate>Mon, 29 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/2022/08/24/clinical-bioinformatics-coding-variants/</guid>
+      <guid>/2022/08/29/clinical-bioinformatics-coding-variants/</guid>
       <description>Course Materials Data  Course Materials  Web tools  VEP SpliceAI GTEx Enrichr PanelApp  Case 1 Clinical profile The case we present first, has a pedigree as follows:
 The proband is the individual III-38 and he&amp;rsquo;s been diagnosed with epilepsy, intellectual disability, speech delay, progressive gait deterioration.
 Download the data Please use the link provided above to download the VCF file, originated from an NGS carried out on the proband.</description>
